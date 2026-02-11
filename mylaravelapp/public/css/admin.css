@@ -1,0 +1,258 @@
+/* ===============================
+   DARK SIDEBAR THEME
+================================ */
+
+#sidebar,
+#sidebar .sidebar-wrapper {
+    background: #0f172a !important;
+    /* Dark Navy */
+}
+
+/* Menu text */
+#sidebar .sidebar-link {
+    color: #e5e7eb !important;
+    font-weight: 500;
+}
+
+/* Icons */
+#sidebar .sidebar-link i {
+    color: #9ca3af !important;
+}
+
+/* Active menu */
+#sidebar .sidebar-item.active .sidebar-link {
+    background: rgba(59, 130, 246, 0.15) !important;
+    color: #3b82f6 !important;
+    border-left: 4px solid #3b82f6;
+}
+
+/* Hover effect */
+#sidebar .sidebar-link:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: #60a5fa !important;
+}
+
+/* Sidebar title */
+#sidebar .sidebar-title {
+    color: #94a3b8 !important;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+/* Logo fix */
+#sidebar .logo img {
+    /* filter: brightness(0) invert(1); */
+    /* white logo */
+}
+
+/* Divider spacing */
+#sidebar .menu li {
+    margin: 4px 0;
+}
+
+/* ========== NAVBAR ALIGN FIX ========== */
+
+.custom-navbar {
+    margin-left: 0 !important;
+    width: 100% !important;
+    left: 0 !important;
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+    background: #ffffff;
+    margin-top: 0 !important;
+}
+
+body.sidebar-collapsed .custom-navbar {
+    margin-left: 0 !important;
+    width: 100% !important;
+}
+
+/* Remove Bootstrap sticky conflict */
+.sticky-top {
+    position: relative !important;
+}
+
+/* Fix Bootstrap Container Conflict */
+
+.admin-content .container,
+.admin-content .container-fluid {
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+/* ========== SIDEBAR TOGGLE ========== */
+/* ========== SIDEBAR TOGGLE ========== */
+
+body.sidebar-collapsed #sidebar {
+    transform: none;
+    width: 80px;
+}
+
+body.sidebar-collapsed #sidebar .sidebar-wrapper {
+    width: 80px;
+}
+
+body.sidebar-collapsed #main {
+    margin-left: 80px !important;
+    width: calc(100% - 80px) !important;
+}
+
+#sidebar,
+#main {
+    transition: all 0.3s ease;
+}
+
+/* Keep navbar at very top; move spacing to content instead */
+#main {
+    padding-top: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.page-content {
+    padding-top: 1.5rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.custom-navbar {
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+/* ===== ADMIN TABLE ACTIONS ===== */
+.action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.action-btn span {
+    display: inline-block;
+}
+
+.page-content .table-wrapper {
+    overflow-x: auto !important;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+}
+
+.page-content .table {
+    min-width: 1100px !important;
+    white-space: nowrap !important;
+}
+
+body.sidebar-collapsed #sidebar .sidebar-link span,
+body.sidebar-collapsed #sidebar .sidebar-title {
+    display: none;
+}
+
+body.sidebar-collapsed #sidebar .logo img {
+    width: 40px !important;
+}
+
+body.sidebar-collapsed #sidebar .sidebar-link {
+    justify-content: center;
+}
+
+/* Keep desktop toggle visible when collapsed */
+body.sidebar-collapsed #sidebar .sidebar-header {
+    padding: 1.2rem 1rem 1rem;
+}
+
+body.sidebar-collapsed #sidebar .sidebar-toggle-desktop {
+    margin-left: 0;
+}
+
+/* ========== LOGOUT ICON FIXES ========== */
+.logout-btn {
+    background: transparent;
+    border: 0;
+    padding: 0;
+    line-height: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logout-btn:focus,
+.logout-btn:focus-visible {
+    outline: none;
+    box-shadow: none;
+}
+
+.logout-btn img {
+    display: block;
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.logout-btn:hover img {
+    transform: scale(1.08);
+    filter: brightness(1.05);
+}
+
+/* ===== FIX SIDEBAR HEIGHT & SCROLL ===== */
+
+#sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 1030;
+}
+
+/* Hide ugly scrollbar (optional) */
+#sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+#sidebar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+}
+
+/* ===============================
+   DASHBOARD STAT CARDS
+================================ */
+
+.stat-card {
+    border: 1px solid rgba(15, 23, 42, 0.06);
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08) !important;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.stat-card .card-body {
+    border-radius: 12px;
+}
+
+.stat-card .text-muted {
+    color: #6b7280 !important;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+}
+
+.stat-card .fs-4 {
+    color: #0f172a;
+}
+
+.stat-card.stat-users .card-body {
+    background: #dff3e6; /* pale green */
+}
+
+.stat-card.stat-ebooks .card-body {
+    background: #f7d9d9; /* pale red */
+}
+
+.stat-card.stat-uploads .card-body {
+    background: #dbeafe; /* pale blue */
+}
+
+.stat-card.stat-expired .card-body {
+    background: #fff4cc; /* pale yellow */
+}

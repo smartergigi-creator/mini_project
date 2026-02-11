@@ -1,0 +1,29 @@
+# Laravel / Node
+mylaravelapp/vendor/
+mylaravelapp/node_modules/
+
+# Storage & Cache
+mylaravelapp/storage/
+mylaravelapp/storage/**
+
+# Uploads / PDFs / Media
+mylaravelapp/public/ebooks/
+mylaravelapp/public/uploads/
+
+# Backups
+importantbackup23jan/
+
+# Env
+.env
+
+# Media
+*.pdf
+*.zip
+*.jpg
+*.png
+*.webp
+*.mp4
+
+# OS
+.DS_Store
+Thumbs.db
