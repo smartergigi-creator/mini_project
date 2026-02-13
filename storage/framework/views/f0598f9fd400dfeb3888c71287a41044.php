@@ -6,7 +6,7 @@
         <!-- Logo -->
         <a class="navbar-brand d-flex align-items-center" href="#">
 
-            <img src="{{ asset('admin/dist/assets/images/logo/logo.png') }}" width="60" alt="">
+            <img src="<?php echo e(asset('admin/dist/assets/images/logo/logo.png')); ?>" width="60" alt="">
 
 
 
@@ -47,16 +47,17 @@
         <div class="d-flex align-items-center gap-3">
 
             <span class="user-name">
-                @if (auth()->check())
-                    {{ auth()->user()->name ?? auth()->user()->email }}
-                @else
+                <?php if(auth()->check()): ?>
+                    <?php echo e(auth()->user()->name ?? auth()->user()->email); ?>
+
+                <?php else: ?>
                     Guest
-                @endif
+                <?php endif; ?>
             </span>
 
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button class="logout-btn"> <img src="{{ asset('images/logout.png') }}" class="hero-img" alt="Hero">
+            <form method="POST" action="<?php echo e(route('logout')); ?>">
+                <?php echo csrf_field(); ?>
+                <button class="logout-btn"> <img src="<?php echo e(asset('images/logout.png')); ?>" class="hero-img" alt="Hero">
                 </button>
             </form>
 
@@ -65,3 +66,4 @@
     </div>
 
 </nav>
+<?php /**PATH C:\xampp\htdocs\ebook\resources\views/layout/navbar.blade.php ENDPATH**/ ?>

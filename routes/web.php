@@ -7,6 +7,7 @@ use App\Http\Controllers\EbookShareController;
 use App\Http\Controllers\SerpAuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,10 @@ use App\Http\Controllers\Admin\UserController;
 Route::get('/', function () {
     return redirect()->route('login');
 });
+
+Route::get('/home', [HomeController::class, 'userHome']);
+
+
 
 /*
 |--------------------------------------------------------------------------

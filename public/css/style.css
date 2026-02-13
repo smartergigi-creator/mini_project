@@ -207,7 +207,7 @@ body.ebook-view .container-fluid {
 }
 
 .btn-info {
-    background: #14b8a6 !important;
+    background: #1abad4 !important;
     border: none !important;
 }
 
@@ -960,22 +960,37 @@ body.book-open .stf__parent {
     transition: all 0.3s ease;
 }
 
+.logout-btn {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
 .logout-btn img {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     object-fit: contain;
     transition: all 0.3s ease;
 }
 
+/* Hover Effect */
 .logout-btn:hover {
     background: #facc15;
-    box-shadow: 0 0 12px #facc15;
-    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(250, 204, 21, 0.6);
+    transform: translateY(-3px) scale(1.1);
 }
 
 .logout-btn:hover img {
-    transform: rotate(10deg);
+    transform: rotate(12deg);
 }
+
 
 /* Custom Navbar with Warning Top Line */
 
@@ -1095,4 +1110,88 @@ body.ebook-view main.container {
         display: inline-block !important;
         cursor: pointer;
     }
+}
+
+.hero-section {
+    background: linear-gradient(135deg, #eaf1ff, #f7f9ff);
+    padding: 80px 0;
+}
+
+.hero-title {
+    font-size: 38px;
+    font-weight: 700;
+}
+
+.hero-subtitle {
+    margin-top: 15px;
+    font-size: 18px;
+    color: #6c757d;
+}
+
+.hero-img {
+    max-width: 70%;
+    margin-top: 15px;
+
+}
+
+.ebook-card {
+    border-radius: 15px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: 0.3s ease;
+}
+
+.ebook-card:hover {
+    transform: translateY(-5px);
+}
+
+.ebook-img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+.ebook-body {
+    padding: 15px;
+}
+
+.ebook-title {
+    font-weight: 600;
+}
+
+
+.nova-navbar {
+    background: #ffffff;
+    padding: 14px 0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.brand-text {
+    font-weight: 700;
+    font-size: 22px;
+    color: #1abad4;
+}
+
+.navbar-nav .nav-link {
+    color: #555;
+    font-weight: 500;
+    margin: 0 14px;
+    transition: 0.3s;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #1abad4;
+}
+
+.navbar-nav .nav-link.active {
+    border: 2px solid #1abad4;
+    padding: 6px 16px;
+    border-radius: 30px;
+    color: #1abad4;
+}
+
+.user-name {
+    font-weight: 600;
+    color: #444;
 }

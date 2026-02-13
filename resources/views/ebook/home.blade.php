@@ -1,9 +1,12 @@
-@extends('layout.user')
+@extends('layout.app')
 
 @section('title', 'Home')
 @section('body-class', 'ebook-home')
 
 @section('content')
+
+
+
 
     {{-- ===============================
    HERO SECTION
@@ -16,14 +19,15 @@
                     <h1>Explore Your eBook Library</h1>
                     <p>Upload, manage and share flipbooks easily.</p>
 
-                    <a href="#ebooksSection" class="btn btn-primary mt-3">
+                    <a href="#ebooksSection" class="btn btn-info mt-3">
                         Browse eBooks →
                     </a>
                 </div>
 
                 <div class="col-lg-6 text-center">
-                    <img src="{{ asset('images/ebook-hero.png') }}" class="hero-img" alt="Hero">
+                    <img src="{{ asset('images/homepage.png') }}" alt="Hero">
                 </div>
+
 
             </div>
         </div>
