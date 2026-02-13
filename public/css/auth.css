@@ -1,0 +1,214 @@
+/* ===============================
+   GLOBAL
+=============================== */
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #ffffff;
+    color: white;
+    min-height: 100vh;
+}
+
+
+/* ===============================
+   LAYOUT
+=============================== */
+
+.container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+}
+
+
+/* ===============================
+   LEFT PANEL (IMAGE BG)
+=============================== */
+
+.left {
+    width: 85%;
+    padding: 60px;
+
+    /* LEFT BACKGROUND IMAGE */
+    background-image: url("/images/e-book.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+
+    /* DARK OVERLAY */
+    position: relative;
+}
+
+.left::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    /* background: rgba(2, 6, 23, 0.6); */
+}
+
+.left * {
+    position: relative;
+    z-index: 1;
+}
+
+
+/* ===============================
+   RIGHT PANEL
+=============================== */
+
+.right {
+    width: 55%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ffffff;
+}
+
+
+/* ===============================
+   FORM BOX (GLASS CARD)
+=============================== */
+
+.form-box {
+    width: 400px;
+
+    background: rgba(2, 6, 23, 0.9);
+
+    padding: 40px;
+    border-radius: 12px;
+
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+}
+
+
+/* ===============================
+   TEXT
+=============================== */
+
+h2 {
+    margin-bottom: 20px;
+}
+
+
+/* ===============================
+   INPUTS
+=============================== */
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+
+    background: #020617;
+    border: 1px solid #334155;
+    color: white;
+
+    border-radius: 6px;
+}
+
+input:focus {
+    outline: none;
+    border-color: #facc15;
+}
+
+
+/* ===============================
+   BUTTON
+=============================== */
+
+button {
+    width: 30%;
+    padding: 12px;
+
+    background: #facc15;
+    border: none;
+    border-radius: 6px;
+
+    font-weight: bold;
+    cursor: pointer;
+
+    /* ✅ CENTER ALIGN */
+    display: block;
+    margin: 0 auto;
+}
+
+
+button:hover {
+    opacity: 0.9;
+}
+
+
+/* ===============================
+   LINKS
+=============================== */
+
+a {
+    color: #facc15;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+/* ===============================
+   ERROR
+=============================== */
+
+.error {
+    color: red;
+    margin-top: 10px;
+}
+
+
+/* ===============================
+   MOBILE RESPONSIVE FIX
+=============================== */
+
+@media only screen and (max-width: 768px) {
+
+    body {
+        overflow-x: hidden;
+    }
+
+    .container {
+        flex-direction: column;
+        height: auto;
+    }
+
+    /* Hide left image on mobile */
+    .left {
+        display: none !important;
+    }
+
+    /* Full width right panel */
+    .right {
+        width: 100% !important;
+        height: 100vh;
+        padding: 20px;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* .form-box {
+        width: 100% !important;
+        max-width: 350px;
+        padding: 25px;
+    } */
+
+    input {
+        font-size: 14px;
+    }
+
+    /* button {
+        width: 100% !important;
+    } */
+}
