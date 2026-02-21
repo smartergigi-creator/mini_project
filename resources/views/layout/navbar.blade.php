@@ -19,48 +19,119 @@
         </button>
 
         <!-- Menu -->
-        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+        <div class="collapse navbar-collapse" id="navbarNav">
+            @php
+                $homeUrl = url('/home');
+                $homeSectionUrl = url('/home#ebooksSection');
+                $menuCategories = isset($categories)
+                    ? $categories
+                    : \App\Models\Category::whereNull('parent_id')
+                        ->with([
+                            'children' => fn($query) => $query->orderBy('name'),
+                            'children.children' => fn($query) => $query->orderBy('name'),
+                        ])
+                        ->orderBy('name')
+                        ->get();
+            @endphp
 
-            <ul class="navbar-nav">
+            <ul class="navbar-nav ms-4 align-items-center">
+
 
                 <li class="nav-item">
-                    <a class="nav-link active" href="">Home</a>
+                    <a class="nav-link {{ request()->is('home') ? 'active' : '' }}" href="{{ $homeUrl }}">Home</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#ebooksSection">Ebooks</a>
+                    <a class="nav-link" href="{{ $homeSectionUrl }}">Ebooks</a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Categories</a>
-                </li>
+                @foreach ($menuCategories as $menuCategory)
+                    @if ($menuCategory->children->isEmpty())
+                        <li class="nav-item">
+                            <a class="nav-link"
+                                href="{{ $homeUrl }}?category={{ $menuCategory->id }}#ebooksSection">{{ $menuCategory->name }}</a>
+                        </li>
+                    @else
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                {{ $menuCategory->name }}
+                            </a>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
-                </li>
+                            <ul
+                                class="dropdown-menu {{ $menuCategory->children->count() > 10 ? 'dropdown-menu-columns' : '' }}">
+                                <li>
+                                    <a class="dropdown-item"
+                                        href="{{ $homeUrl }}?category={{ $menuCategory->id }}#ebooksSection">
+                                        All {{ $menuCategory->name }}
+                                    </a>
+                                </li>
+
+                                @foreach ($menuCategory->children as $menuSubcategory)
+                                    @if ($menuSubcategory->children->isEmpty())
+                                        <li>
+                                            <a class="dropdown-item"
+                                                href="{{ $homeUrl }}?category={{ $menuCategory->id }}&subcategory={{ $menuSubcategory->id }}#ebooksSection">
+                                                {{ $menuSubcategory->name }}
+                                            </a>
+                                        </li>
+                                    @else
+                                        <li class="dropdown-submenu position-relative">
+                                            <a class="dropdown-item dropdown-toggle"
+                                                href="{{ $homeUrl }}?category={{ $menuCategory->id }}&subcategory={{ $menuSubcategory->id }}#ebooksSection">
+                                                {{ $menuSubcategory->name }}
+                                            </a>
+                                            <ul class="dropdown-menu position-absolute start-100 top-0">
+                                                <li>
+                                                    <a class="dropdown-item"
+                                                        href="{{ $homeUrl }}?category={{ $menuCategory->id }}&subcategory={{ $menuSubcategory->id }}#ebooksSection">
+                                                        All {{ $menuSubcategory->name }}
+                                                    </a>
+                                                </li>
+                                                @foreach ($menuSubcategory->children as $menuRelatedSubcategory)
+                                                    <li>
+                                                        <a class="dropdown-item"
+                                                            href="{{ $homeUrl }}?category={{ $menuCategory->id }}&subcategory={{ $menuSubcategory->id }}&related_subcategory={{ $menuRelatedSubcategory->id }}#ebooksSection">
+                                                            {{ $menuRelatedSubcategory->name }}
+                                                        </a>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        </li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        </li>
+                    @endif
+                @endforeach
+
+
+
 
             </ul>
 
         </div>
 
         <!-- Right Side -->
-        <div class="d-flex align-items-center gap-3">
+        <div class="d-flex align-items-center gap-2">
 
             <span class="user-name">
                 @if (auth()->check())
                     {{ auth()->user()->name ?? auth()->user()->email }}
                 @else
-                    Guest
+                    Guest!
                 @endif
             </span>
 
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
-                <button class="logout-btn"> <img src="{{ asset('images/logout.png') }}" class="hero-img" alt="Hero">
+                <button class="logout-btn">
+                    <img src="{{ asset('images/logout.png') }}" alt="Logout">
                 </button>
             </form>
 
         </div>
+
 
     </div>
 

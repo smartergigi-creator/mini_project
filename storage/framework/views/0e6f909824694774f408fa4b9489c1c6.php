@@ -98,3 +98,4 @@
     </section>
 </body>
 </html>
+<?php /**PATH C:\xampp\htdocs\ebook\resources\views/ebook/errors/share-invalid.blade.php ENDPATH**/ ?>

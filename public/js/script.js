@@ -177,12 +177,24 @@ window.addEventListener("pageshow", (event) => {
     function calculateSize() {
         const vw = window.innerWidth;
         const vh = window.innerHeight;
+        const mobile = vw <= 900;
+        const landscape = vw > vh;
 
-        let w = vw * 0.9;
+        const viewer = document.getElementById("viewer-wrapper");
+        const rect = viewer?.getBoundingClientRect();
+
+        const availableW = Math.max(220, Math.floor((rect?.width || vw) - (mobile ? 12 : 48)));
+        const availableH = Math.max(
+            220,
+            Math.floor((rect?.height || vh) - (mobile ? (landscape ? 10 : 20) : 36)),
+        );
+
+        let w = availableW * (mobile && landscape ? 0.98 : 0.92);
         let h = w * PAGE_RATIO;
+        const maxH = availableH * (mobile && landscape ? 0.96 : 0.9);
 
-        if (h > vh * 0.9) {
-            h = vh * 0.9;
+        if (h > maxH) {
+            h = maxH;
             w = h / PAGE_RATIO;
         }
 
@@ -231,16 +243,13 @@ window.addEventListener("pageshow", (event) => {
             width,
             height,
 
-            size: mobile && landscape ? "stretch" : "fixed",
+            size: "fixed",
 
             showCover: false,
 
-            // usePortrait: mobile && !landscape,
-            usePortrait:
-                window.innerWidth <= 768 &&
-                window.innerHeight > window.innerWidth,
+            usePortrait: mobile && !landscape,
 
-            autoSize: true,
+            autoSize: false,
             maxShadowOpacity: 0.3,
 
             mobileScrollSupport: true,

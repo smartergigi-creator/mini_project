@@ -61,6 +61,10 @@ protected $fillable = [
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'can_upload' => 'boolean',
+            'can_share' => 'boolean',
+            'upload_limit' => 'integer',
+            'share_limit' => 'integer',
         ];
     }
 

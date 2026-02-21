@@ -88,7 +88,7 @@ public function login(Request $request)
     ]);
 
     try {
-        $res = Http::withHeaders([
+        $res = Http::timeout(15)->withHeaders([
             'Content-Type' => 'application/json',
         ])->post('https://api-serp.smarter.com.ph/api/auth/login', [
             'username' => $request->username,
@@ -96,13 +96,36 @@ public function login(Request $request)
         ]);
 
         if (!$res->successful()) {
-            return back()->with('error', 'Invalid SERP credentials');
+            Log::warning('SERP login failed with non-success status', [
+                'username' => $request->username,
+                'status' => $res->status(),
+                'body' => $res->body(),
+            ]);
+
+            $status = $res->status();
+            $message = match (true) {
+                $status === 401, $status === 403 => 'Invalid SERP credentials',
+                $status === 429 => 'Too many attempts. Please try again later.',
+                $status >= 500 => 'SERP service unavailable. Please try again.',
+                default => 'Login failed. Please verify your details.',
+            };
+
+            return back()
+                ->with('error', $message)
+                ->withInput($request->only('username'));
         }
 
         $serp = $res->json();
 
         if (!($serp['success'] ?? true)) {
-            return back()->with('error', 'Invalid SERP credentials');
+            Log::warning('SERP login returned unsuccessful payload', [
+                'username' => $request->username,
+                'response' => $serp,
+            ]);
+
+            return back()
+                ->with('error', 'Invalid SERP credentials')
+                ->withInput($request->only('username'));
         }
 
         $serpId = $request->username;
@@ -157,15 +180,20 @@ if ($user->role === 'admin') {
     return redirect()->route('admin.dashboard');
 }
 
-return redirect()->route('admin.ebooks');
+return redirect('/home');
 
 
 
 
     } catch (\Throwable $e) {
-        Log::error('SERP LOGIN ERROR: ' . $e->getMessage());
-        // return back()->with('error', 'Login failed');
-        dd($e->getMessage());
+        Log::error('SERP LOGIN ERROR', [
+            'username' => $request->username,
+            'message' => $e->getMessage(),
+        ]);
+
+        return back()
+            ->with('error', 'Login failed. Please try again later.')
+            ->withInput($request->only('username'));
 
     }
 }

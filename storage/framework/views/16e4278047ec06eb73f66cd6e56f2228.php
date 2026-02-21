@@ -25,7 +25,11 @@
                     <!-- Upload Limit -->
                     <div class="mb-1">
                         📂 <strong>Upload Limit:</strong>
-                        <?php echo e(auth()->user()->upload_limit); ?> files
+                        <?php if(auth()->user()->can_upload && (int) auth()->user()->upload_limit === 0): ?>
+                            Unlimited
+                        <?php else: ?>
+                            <?php echo e(auth()->user()->upload_limit); ?> files
+                        <?php endif; ?>
                     </div>
 
                 </div>
@@ -44,70 +48,105 @@
 
                 <!-- Hidden base URL -->
                 <input type="hidden" id="baseShareUrl" value="<?php echo e(url('/ebook/public')); ?>">
-                <?php if(auth()->user()->role !== 'admin'): ?>
-                    <form id="uploadForm" enctype="multipart/form-data">
+                <?php if(
+                    auth()->check() &&
+                        (auth()->user()->role === 'admin' || auth()->user()->can_upload)
+                ): ?>
 
-                        <!-- Ebook Name -->
-                        <div class="mb-3">
-                            <input type="text" name="ebook_name" class="ebook-input" placeholder="Enter Ebook Name"
-                                required>
+                    <div class="card shadow-sm border-0 rounded-4 mb-4 upload-card">
+
+                        <div class="card-body p-4">
+
+                            <h5 class="mb-4 section-title">ðŸ“˜ Upload New eBook</h5>
+
+                            <form id="uploadForm" enctype="multipart/form-data">
+
+                                <div class="row g-3 mb-4">
+
+                                    <!-- Ebook Name -->
+                                    <div class="col-md-3">
+                                        <label class="form-label fw-semibold">Ebook Name</label>
+                                        <input type="text" name="ebook_name" class="form-control custom-input"
+                                            placeholder="Enter Ebook Name" required>
+                                    </div>
+
+                                    <!-- Category (Parent Only) -->
+                                    <div class="col-md-3" id="categoryField"
+                                        style="<?php echo e($categories->count() > 0 ? '' : 'display:none;'); ?>">
+                                        <label class="form-label fw-semibold">Category</label>
+                                        <select name="category_id" id="categorySelect" class="form-select custom-input">
+                                            <option value="">Select Category</option>
+
+                                            <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <option value="<?php echo e($category->id); ?>">
+                                                    <?php echo e($category->name); ?>
+
+                                                </option>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                                        </select>
+                                    </div>
+
+                                    <!-- Subcategory -->
+                                    <div class="col-md-3" id="subCategoryField" style="display:none;">
+                                        <label class="form-label fw-semibold">Sub Category</label>
+                                        <select name="subcategory_id" id="subCategorySelect" class="form-select custom-input">
+                                            <option value="">Select Subcategory</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Related Subcategory (Level 3) -->
+                                    <div class="col-md-3" id="relatedSubCategoryField" style="display:none;">
+                                        <label class="form-label fw-semibold">Related Sub Category</label>
+                                        <select name="related_subcategory_id" id="relatedSubCategorySelect"
+                                            class="form-select custom-input">
+                                            <option value="">Select Related Subcategory</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+
+                                <!-- Upload Box -->
+                                <div class="upload-box mb-4" id="dropzone">
+
+                                    <div class="upload-icon mb-2">ðŸ“</div>
+
+                                    <p class="upload-text text-center">
+                                        Drag & drop PDFs or folder here <br>
+                                        or click to select
+                                    </p>
+
+                                    <input type="file" id="pdfInput" name="pdfs[]" multiple accept="application/pdf"
+                                        hidden>
+                                    <input type="file" id="folderInput" name="pdfs[]" webkitdirectory directory multiple
+                                        hidden>
+
+                                    <div class="text-center mt-3">
+                                        <button type="button" class="btn btn-outline-primary me-2" id="selectFiles">
+                                            Select PDF(s)
+                                        </button>
+
+                                        <button type="button" class="btn btn-outline-primary" id="selectFolder">
+                                            Select Folder
+                                        </button>
+                                    </div>
+
+                                </div>
+
+                                <div class="text-end">
+                                    <button type="submit" class="btn btn-primary px-4">
+                                        Upload & Save
+                                    </button>
+                                </div>
+
+                            </form>
+
                         </div>
+                    </div>
 
-                        <!-- Upload Box -->
-                        <div class="upload-box mb-4" id="dropzone">
 
-                            <div class="upload-icon mb-2">📁</div>
-
-                            <p class="upload-text text-center">
-                                Drag & drop PDFs or folder here <br>
-                                or click to select
-                            </p>
-
-                            <input type="file" id="pdfInput" name="pdfs[]" multiple accept="application/pdf" hidden>
-
-                            <input type="file" id="folderInput" name="pdfs[]" webkitdirectory directory multiple hidden>
-
-                            <div class="text-center mt-3">
-
-                                <button type="button" class="select-btn me-2" id="selectFiles">
-                                    Select PDF(s)
-                                </button>
-
-                                <button type="button" class="select-btn" id="selectFolder">
-                                    Select Folder
-                                </button>
-
-                            </div>
-
-                            <div class="upload-subtext">
-                                Choose <strong>Select PDF(s)</strong> to upload one or more PDF files. <br>
-                                Choose <strong>Select Folder</strong> to upload a folder containing PDF files.
-                            </div>
-
-                        </div>
-
-                        <div id="uploadStatus" class="upload-status" style="display:none;">
-                            <span class="spinner"></span>
-                            <span class="text">Uploading ebook... Please wait</span>
-                        </div>
-
-                        <!-- Selected Files -->
-                        <div id="fileList" class="mb-3" style="display:none;">
-
-                            <h6>
-                                Selected Files (<span id="fileCount">0</span>)
-                            </h6>
-
-                            <ul id="fileItems"></ul>
-
-                            <button type="submit" class="upload-btn">
-                                Upload & Save
-                            </button>
-
-                        </div>
-
-                    </form>
                 <?php endif; ?>
+
                 <!-- Ebook List Card -->
                 <div class="card mt-4">
 
@@ -129,6 +168,8 @@
                                             <th>#</th>
                                             <th>Title</th>
                                             <th>Folder</th>
+                                            <th>Category</th>
+                                            <th>Sub Category</th>
                                             <th>Date</th>
                                             <th>Upload By</th>
                                             <th>Shared By</th>
@@ -167,6 +208,12 @@
 
                                                     <!-- Folder -->
                                                     <td><?php echo e($file->folder_path); ?></td>
+
+                                                    <!-- Category -->
+                                                    <td><?php echo e($file->category->name ?? '-'); ?></td>
+
+                                                    <!-- Subcategory -->
+                                                    <td><?php echo e($file->subcategory->name ?? '-'); ?></td>
 
                                                     <!-- Created Date -->
                                                     <td class="text-nowrap" style="min-width:140px;">
@@ -216,7 +263,11 @@
                                                         </a>
 
                                                         <!-- Share -->
-                                                        <?php if(auth()->user()->role !== 'admin'): ?>
+                                                        <?php if(
+                                                            auth()->user()->role === 'admin' ||
+                                                                (auth()->user()->can_share &&
+                                                                    (int) auth()->user()->share_limit > 0)
+                                                        ): ?>
                                                             <button class="btn btn-sm btn-info action-btn"
                                                                 onclick="openShareModal(<?php echo e($file->id); ?>)">
                                                                 <i class="bi bi-share"></i>
@@ -285,9 +336,5 @@
     </div>
 </div>
 
-
-<?php $__env->startPush('scripts'); ?>
-    <script src="<?php echo e(asset('js/script.js')); ?>"></script>
-<?php $__env->stopPush(); ?>
 
 <?php echo $__env->make('admin.layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\ebook\resources\views/ebook/index.blade.php ENDPATH**/ ?>

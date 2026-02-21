@@ -29,6 +29,17 @@ body:not(.ebook-view) {
     background: #ffffff;
 }
 
+/* Safety: never render flipbook UI outside ebook viewer page */
+body:not(.ebook-view) #viewer-wrapper,
+body:not(.ebook-view) .viewer-toolbar,
+body:not(.ebook-view) .ebook-side-nav,
+body:not(.ebook-view) #flipbook,
+body:not(.ebook-view) .stf__parent,
+body:not(.ebook-view) .stf__wrapper,
+body:not(.ebook-view) .stf__page {
+    display: none !important;
+}
+
 /* body {
     background-color: #e0e0e0;   
 } */
@@ -221,15 +232,15 @@ body.ebook-view .container-fluid {
 ========================================================= */
 #viewer-wrapper {
     width: 100%;
-    min-height: 100vh;
+    min-height: calc(100vh - 96px);
     display: none;
     /* shown by JS */
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
 
     background: transparent;
     /* 🔥 BODY GREY WILL SHOW */
-    padding: 20px 0;
+    padding: 8px 0 20px;
 
     opacity: 0;
     transition: opacity 0.3s ease;
@@ -446,7 +457,7 @@ body.book-open .stf__parent {
         max-width: 100%;
         max-height: 100%;
         border-radius: 12px;
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+        box-shadow: none;
     }
 
     .stf__parent {
@@ -600,19 +611,19 @@ body.book-open .stf__parent {
     }
 }
 
-.page {
+body.ebook-view .page {
     overflow: hidden;
     background: #fff;
 }
 
-.page img,
-.page canvas {
+body.ebook-view .page img,
+body.ebook-view .page canvas {
     width: 100% !important;
     height: 100% !important;
     object-fit: contain !important;
 }
 
-.page {
+body.ebook-view .page {
     overflow: hidden;
 }
 
@@ -1194,4 +1205,136 @@ body.ebook-view main.container {
 .user-name {
     font-weight: 600;
     color: #444;
+}
+
+/* =========================================================
+   HOME PAGE EBOOK GRID
+========================================================= */
+body.ebook-home #ebooksSection .book-wrapper {
+    position: relative;
+    max-width: 230px;
+    margin: 0 auto;
+    perspective: 1100px;
+}
+
+body.ebook-home #ebooksSection .book {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 4.2;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #ffffff;
+    border: 1px solid #d6dbe3;
+    transform: rotateY(-4deg);
+    transform-origin: left center;
+    box-shadow:
+        -8px 0 0 rgba(0, 0, 0, 0.18),
+        -12px 0 10px -7px rgba(0, 0, 0, 0.28);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+body.ebook-home #ebooksSection .book::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 34%;
+    background: linear-gradient(135deg, rgba(206, 210, 216, 0.5) 0%, rgba(206, 210, 216, 0) 58%);
+    pointer-events: none;
+    z-index: 2;
+}
+
+body.ebook-home #ebooksSection .book::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 8px;
+    height: 100%;
+    background: linear-gradient(270deg, rgba(26, 32, 44, 0.04) 0%, rgba(26, 32, 44, 0.25) 100%);
+    pointer-events: none;
+    z-index: 2;
+}
+
+body.ebook-home #ebooksSection .book img {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+    background: #ffffff;
+    padding: 0;
+}
+
+body.ebook-home #ebooksSection .book-wrapper:hover .book {
+    transform: rotateY(-2deg) translateY(-3px);
+    box-shadow:
+        -10px 0 0 rgba(0, 0, 0, 0.2),
+        -16px 0 12px -8px rgba(0, 0, 0, 0.32);
+    filter: saturate(1.04);
+}
+
+body.ebook-home #ebooksSection .book-actions {
+    position: absolute;
+    inset: 0;
+    transform: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-width: 0;
+    padding: 12px;
+    border-radius: 0;
+    background: rgba(255, 255, 255, 0.82);
+    z-index: 5;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+body.ebook-home #ebooksSection .book-wrapper:hover .book-actions {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+body.ebook-home #ebooksSection .book-wrapper:focus-within .book-actions {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+body.ebook-home #ebooksSection .book-action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 6px;
+    width: min(180px, 85%);
+    padding: 7px 10px;
+    border-radius: 8px;
+    border: 1px solid #e3e5ea;
+    background: #ececef;
+    color: #1f2937;
+    text-decoration: none;
+    font-size: 15px;
+    line-height: 1;
+    backdrop-filter: blur(2px);
+}
+
+body.ebook-home #ebooksSection .book-action-btn:hover {
+    border-color: #d0d5dd;
+    background: #e1e3e8;
+    color: #111827;
+}
+
+body.ebook-home #ebooksSection .book-info {
+    margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+    body.ebook-home #ebooksSection .book-wrapper {
+        max-width: 180px;
+    }
 }

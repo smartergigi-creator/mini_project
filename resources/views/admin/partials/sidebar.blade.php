@@ -1,5 +1,6 @@
 <div id="sidebar" class="sidebar active">
 
+
     <div class="sidebar-wrapper">
 
 
@@ -11,6 +12,7 @@
                 <!-- Logo -->
                 <div class="logo">
                     <img style="width:80px; height:auto;" src="{{ asset('admin/dist/assets/images/logo/logo.png') }}">
+                    <span class="brand-text">eBook</span>
                 </div>
 
                 <!-- Mobile Close Button -->
@@ -28,6 +30,8 @@
             </div>
 
         </div>
+
+        <div class="sidebar-logo-separator"></div>
 
 
         <!-- Menu -->
@@ -54,12 +58,14 @@
 
                     {{-- ✅ Admin + User (Both can see) --}}
 
-                        <li class="sidebar-item {{ request()->is('admin/ebooks*') ? 'active' : '' }}">
-                        <a href="{{ route('admin.ebooks') }}" class="sidebar-link">
-                            <i class="bi bi-book"></i>
-                            <span>Ebooks</span>
-                        </a>
-                    </li>
+                    @if (auth()->user()->role === 'admin')
+                        <li class="sidebar-item {{ request()->is('admin/categories*') ? 'active' : '' }}">
+                            <a href="{{ route('admin.categories') }}" class="sidebar-link">
+                                <i class="bi bi-tags"></i>
+                                <span>Category</span>
+                            </a>
+                        </li>
+                    @endif
 
 
                     {{-- ✅ All Users --}}

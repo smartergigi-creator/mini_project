@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use App\Models\Ebook;
 use App\Models\EbookPage;
 
+use App\Models\Category;  
 
 use Illuminate\Support\Facades\DB;
 
@@ -26,24 +27,31 @@ class EbookController extends Controller
 //     return view('ebook.index', compact('ebooks'));
 // }
 
+
+
 public function index()
 { 
     $user = auth()->user();
-$ebooks = Ebook::latest()->paginate(10);
-    //  $ebooks = Ebook::latest()->paginate(10);
-    // $groupedEbooks = $ebooks->groupBy('manual_title');
-    // $ebooks = Ebook::latest()->paginate(20);
-    $ebooks = Ebook::with(['uploader', 'sharedUser'])
-    ->latest()
-    ->paginate(10);
 
+    $ebooks = Ebook::with(['uploader', 'sharedUser', 'category', 'subcategory', 'relatedSubcategory'])
+        ->latest()
+        ->paginate(10);
 
     $groupedEbooks = $ebooks->getCollection()->groupBy('title');
 
-    return view('ebook.index', compact('ebooks',
+    // Parent categories for category dropdown
+    $categories = Category::whereNull('parent_id')
+        ->orderBy('name')
+        ->get();
+
+    return view('ebook.index', compact(
+        'ebooks',
         'groupedEbooks',
-        'user'));
+        'user',
+        'categories'   // 🔥 now passed to blade
+    ));
 }
+
 
 
     /* ======================================================
@@ -61,7 +69,12 @@ public function store(Request $request)
         /* ============================
            1. Upload Permission
         ============================ */
-        if (!$user || $user->can_upload == 0) {
+        $hasUploadAccess = $user && (
+            $user->role === 'admin'
+            || $user->can_upload
+        );
+
+        if (!$hasUploadAccess) {
             return response()->json([
                 'status' => false,
                 'message' => 'You are not allowed to upload'
@@ -70,22 +83,14 @@ public function store(Request $request)
 
 
         /* ============================
-           2. HARD BLOCK IF LIMIT = 0
-        ============================ */
-        if ((int)$user->upload_limit === 0) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Your upload limit is 0. Contact admin.'
-            ], 403);
-        }
-
-
-        /* ============================
-           3. COUNT USING user_id ONLY ✅
+           3. COUNT EXISTING UPLOADS
         ============================ */
 
         // Already uploaded ebooks (reliable)
-        $uploadedCount = Ebook::where('user_id', $user->id)->count();
+        $uploadedCount = Ebook::where(function ($q) use ($user) {
+            $q->where('user_id', $user->id)
+              ->orWhere('uploaded_by', $user->id);
+        })->count();
 
         // New files count
         $newFilesCount = $request->hasFile('pdfs')
@@ -95,11 +100,14 @@ public function store(Request $request)
         $totalAfterUpload = $uploadedCount + $newFilesCount;
 
 
-        if ($totalAfterUpload > $user->upload_limit) {
+        $uploadLimit = (int) $user->upload_limit;
+        $hasFiniteLimit = $user->role !== 'admin' && $uploadLimit > 0;
+
+        if ($hasFiniteLimit && $totalAfterUpload > $uploadLimit) {
 
             $remaining = max(
                 0,
-                $user->upload_limit - $uploadedCount
+                $uploadLimit - $uploadedCount
             );
 
             return response()->json([
@@ -116,9 +124,38 @@ public function store(Request $request)
 
         $request->validate([
             'ebook_name' => 'required|string|max:255',
+            'category_id' => 'nullable|exists:categories,id',
+            'subcategory_id' => 'nullable|exists:categories,id',
+            'related_subcategory_id' => 'nullable|exists:categories,id',
             'pdfs'       => 'required|array|min:1',
             'pdfs.*'     => 'required|file|mimes:pdf|max:51200',
         ]);
+
+        if ($request->filled('category_id') && $request->filled('subcategory_id')) {
+            $isValidSubcategory = Category::where('id', $request->subcategory_id)
+                ->where('parent_id', $request->category_id)
+                ->exists();
+
+            if (!$isValidSubcategory) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Invalid subcategory for selected category.'
+                ], 422);
+            }
+        }
+
+        if ($request->filled('subcategory_id') && $request->filled('related_subcategory_id')) {
+            $isValidRelatedSubcategory = Category::where('id', $request->related_subcategory_id)
+                ->where('parent_id', $request->subcategory_id)
+                ->exists();
+
+            if (!$isValidRelatedSubcategory) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Invalid related subcategory for selected subcategory.'
+                ], 422);
+            }
+        }
 
 
         if (!$request->hasFile('pdfs')) {
@@ -182,13 +219,16 @@ public function store(Request $request)
             $file->move($basePath, $pdfName);
 
 
-            Ebook::create([
+            $ebook = Ebook::create([
 
                 'title'       => $manualTitle,
                 'file_title'  => $safeTitle,
                 'pdf_path'    => "ebooks/$folder/$pdfName",
                 'folder_path' => $folder,
                 'page_count'  => 0,
+                'category_id' => $request->category_id,
+                'subcategory_id' => $request->subcategory_id,
+                'related_subcategory_id' => $request->related_subcategory_id,
 
                 // MAIN FIELD ✅
                 'user_id'     => $user->id,
@@ -196,6 +236,13 @@ public function store(Request $request)
                 // optional
                 'uploaded_by' => $user->id,
             ]);
+
+            // Pre-generate pages so home view can show first-page cover immediately.
+            try {
+                $this->ensurePagesExist($ebook);
+            } catch (\Throwable $e) {
+                // Keep upload successful even if preview generation fails for one file.
+            }
 
             $created++;
         }
@@ -477,3 +524,4 @@ public function viewApi($id)
 }
 
 }
+

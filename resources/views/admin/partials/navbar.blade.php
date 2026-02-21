@@ -1,39 +1,70 @@
-<nav class="navbar navbar-expand-lg custom-navbar shadow-sm  mb-4">
+<nav class="navbar navbar-expand-lg custom-navbar px-4">
 
-    <div class="d-flex justify-content-between align-items-center w-100">
 
-        <!-- Left -->
-        <div class="d-flex align-items-center ms-4 fw-bold fs-5 text-dark">
-            <button class="btn btn-sm btn-light me-2 d-md-none sidebar-toggle" type="button" aria-label="Toggle sidebar">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+
+        <!-- LEFT SIDE -->
+        <div class="d-flex align-items-center gap-3">
+
+            <!-- Sidebar Toggle -->
+            <button class="btn toggle-btn d-md-none sidebar-toggle">
                 <i class="bi bi-list"></i>
             </button>
-            <img src="{{ asset('images/dashboard.png') }}" width="28" height="28" class="me-2">
-            <span>Dashboard</span>
-        </div>
 
-        <!-- Right -->
-        <form method="POST" action="{{ route('logout') }}" class="d-flex align-items-center ms-auto gap-3">
-            @csrf
-
-            <!-- Logged User -->
-            <span class="navbar-text fw-semibold text-dark">
-
-                @if (auth()->check())
-                    {{ auth()->user()->name ?? (auth()->user()->serp_id ?? auth()->user()->email) }}
-                @else
-                    Guest
-                @endif
-
-            </span>
-
-            <!-- Logout Button -->
-            <div class="logout-box">
-                <button type="submit" class="logout-btn" title="Logout">
-                    <img src="{{ asset('images/logout.png') }}" width="32" height="32" alt="Logout">
-                </button>
+            <!-- Page Title -->
+            <div class="d-flex align-items-center gap-2">
+                <img src="{{ asset('images/dashboard.png') }}" alt="Dashboard" class="dashboard-title-icon">
+                <span class="fw-semibold text-white fs-5">Dashboard</span>
             </div>
 
-        </form>
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="d-flex align-items-center gap-4">
+
+            <!-- Search Box -->
+            <div class="search-box d-none d-md-block">
+                <input type="text" class="form-control" placeholder="Search...">
+            </div>
+
+            <!-- Notification -->
+            <div class="position-relative">
+                <i class="bi bi-bell text-white fs-5"></i>
+                <span class="notify-badge">3</span>
+            </div>
+
+            <!-- User Dropdown -->
+            <div class="dropdown">
+                <a class="d-flex align-items-center gap-2 text-white text-decoration-none dropdown-toggle"
+                    href="#" role="button" data-bs-toggle="dropdown">
+
+                    <div class="user-avatar">
+                        <img src="{{ asset('admin/dist/assets/images/logo/userlogo.webp') }}" alt="User"
+                            class="user-avatar-img">
+                    </div>
+
+                    <span class="fw-semibold">
+                        {{ auth()->user()->name ?? 'Admin' }}
+                    </span>
+                </a>
+
+                <ul class="dropdown-menu dropdown-menu-end shadow border-0">
+                    <li><a class="dropdown-item" href="#">Profile</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="dropdown-item text-danger">
+                                Logout
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
 
     </div>
 

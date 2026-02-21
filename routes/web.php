@@ -8,6 +8,8 @@ use App\Http\Controllers\SerpAuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\HomeController;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,10 +21,6 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
-Route::get('/home', [HomeController::class, 'userHome']);
-
-
-
 /*
 |--------------------------------------------------------------------------
 | Auth
@@ -31,7 +29,9 @@ Route::get('/home', [HomeController::class, 'userHome']);
 
 Route::get('/login', function () {
     if (auth()->check()) {
-        return redirect()->route('admin.ebooks');
+        return auth()->user()->role === 'admin'
+            ? redirect()->route('admin.dashboard')
+            : redirect('/home');
     }
     return view('auth.login');
 })->name('login');
@@ -42,6 +42,37 @@ Route::post('/serp-login', [SerpAuthController::class, 'login'])
 Route::post('/logout', [SerpAuthController::class, 'logout'])
     ->name('logout');
 
+// Local development fallback when SERP is unavailable.
+if (app()->environment('local')) {
+    Route::get('/dev-login', function () {
+        $user = User::firstOrCreate(
+            ['email' => 'local.admin@ebook.test'],
+            [
+                'name' => 'Local Admin',
+                'serp_id' => 'LOCAL_ADMIN',
+                'role' => 'admin',
+                'status' => 'active',
+                'created_by' => null,
+            ]
+        );
+
+        if ($user->role !== 'admin') {
+            $user->role = 'admin';
+            $user->status = 'active';
+            $user->save();
+        }
+
+        Auth::guard('web')->login($user);
+        session([
+            'serp_token' => 'local-dev-token',
+            'serp_refresh' => 'local-dev-refresh',
+            'serp_expiry' => now()->addDays(7)->toDateTimeString(),
+        ]);
+
+        return redirect()->route('admin.dashboard');
+    })->name('dev.login');
+}
+
 
 /*
 |--------------------------------------------------------------------------
@@ -51,17 +82,18 @@ Route::post('/logout', [SerpAuthController::class, 'logout'])
 
 Route::middleware(['auth','serp.auth','nocache'])->group(function () {
 
+    Route::get('/home', [HomeController::class, 'userHome']);
+
     /* ---------------- Dashboard ---------------- */
 
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])
         ->middleware('admin')
         ->name('admin.dashboard');
+        
+    Route::get('/get-subcategories/{id}', function ($id) {
+        return \App\Models\Category::where('parent_id', $id)->get();
+    });
 
-
-    /* ---------------- Ebooks ---------------- */
-
-    Route::get('/admin/ebooks', [EbookController::class, 'index'])
-        ->name('admin.ebooks');
 
     Route::get('/ebook/view/{id}', [EbookController::class, 'view']);
 
@@ -97,13 +129,33 @@ Route::middleware(['auth','serp.auth','nocache'])->group(function () {
 
 Route::middleware(['auth','admin'])->group(function () {
 
+    Route::get('/admin/categories', [AdminController::class, 'categories'])
+        ->name('admin.categories');
+
+    Route::post('/admin/categories/store-tree', [AdminController::class, 'storeCategoryTree'])
+        ->name('admin.categories.storeTree');
+
+    Route::put('/admin/categories/{id}', [AdminController::class, 'updateCategory'])
+        ->name('admin.categories.update');
+
+    Route::delete('/admin/categories/{id}', [AdminController::class, 'deleteCategory'])
+        ->name('admin.categories.delete');
+
     Route::post('/admin/users/{id}/update',
         [UserController::class, 'update']
     )->name('admin.users.update');
 
+    Route::delete('/admin/users/{id}',
+        [UserController::class, 'destroy']
+    )->name('admin.users.destroy');
+
     Route::post('/admin/users/{id}/reset-uploads',
         [AdminController::class, 'resetUserUploads']
     )->name('admin.users.resetUploads');
+
+    Route::post('/admin/users/{id}/reset-shares',
+        [AdminController::class, 'resetUserShares']
+    )->name('admin.users.resetShares');
 
 });
 

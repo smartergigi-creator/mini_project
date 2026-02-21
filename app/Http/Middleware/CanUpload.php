@@ -19,7 +19,11 @@ class CanUpload
         abort(401);
     }
 
-    if (!auth()->user()->can_upload && auth()->user()->role !== 'admin') {
+    $user = auth()->user();
+    $hasUploadAccess = $user->role === 'admin'
+        || $user->can_upload;
+
+    if (!$hasUploadAccess) {
         abort(403, 'Upload permission denied');
     }
 

@@ -1,5 +1,6 @@
 <div id="sidebar" class="sidebar active">
 
+
     <div class="sidebar-wrapper">
 
 
@@ -11,6 +12,7 @@
                 <!-- Logo -->
                 <div class="logo">
                     <img style="width:80px; height:auto;" src="<?php echo e(asset('admin/dist/assets/images/logo/logo.png')); ?>">
+                    <span class="brand-text">eBook</span>
                 </div>
 
                 <!-- Mobile Close Button -->
@@ -28,6 +30,8 @@
             </div>
 
         </div>
+
+        <div class="sidebar-logo-separator"></div>
 
 
         <!-- Menu -->
@@ -54,12 +58,14 @@
 
                     
 
-                        <li class="sidebar-item <?php echo e(request()->is('admin/ebooks*') ? 'active' : ''); ?>">
-                        <a href="<?php echo e(route('admin.ebooks')); ?>" class="sidebar-link">
-                            <i class="bi bi-book"></i>
-                            <span>Ebooks</span>
-                        </a>
-                    </li>
+                    <?php if(auth()->user()->role === 'admin'): ?>
+                        <li class="sidebar-item <?php echo e(request()->is('admin/categories*') ? 'active' : ''); ?>">
+                            <a href="<?php echo e(route('admin.categories')); ?>" class="sidebar-link">
+                                <i class="bi bi-tags"></i>
+                                <span>Category</span>
+                            </a>
+                        </li>
+                    <?php endif; ?>
 
 
                     
