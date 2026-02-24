@@ -6625,3 +6625,195 @@ Stack trace:
 #70 C:\\xampp\\htdocs\\ebook\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\resources\\server.php(23): require_once('C:\\\\xampp\\\\htdocs...')
 #71 {main}
 "} 
+[2026-02-24 05:31:38] local.ERROR: __VSCODE_LARAVEL_STARTUP_ERROR__: rename(C:\xampp\htdocs\ebook\bootstrap\cache\pac3000.tmp,C:\xampp\htdocs\ebook\bootstrap\cache/packages.php): Access is denied (code: 5) {"exception":"[object] (Error(code: 0): __VSCODE_LARAVEL_STARTUP_ERROR__: rename(C:\\xampp\\htdocs\\ebook\\bootstrap\\cache\\pac3000.tmp,C:\\xampp\\htdocs\\ebook\\bootstrap\\cache/packages.php): Access is denied (code: 5) at C:/xampp/htdocs/ebook/vendor/_laravel_ide/discover-6d96201ad95cad12367117063c707ebf.php:33)
+[stacktrace]
+#0 C:/xampp/htdocs/ebook/vendor/_laravel_ide/discover-6d96201ad95cad12367117063c707ebf.php(62): LaravelVsCode::startupError(Object(ErrorException))
+#1 {main}
+"} 
+[2026-02-24 05:31:38] local.ERROR: rename(C:\xampp\htdocs\ebook\bootstrap\cache\pac2FF0.tmp,C:\xampp\htdocs\ebook\bootstrap\cache/packages.php): Access is denied (code: 5) {"exception":"[object] (ErrorException(code: 0): rename(C:\\xampp\\htdocs\\ebook\\bootstrap\\cache\\pac2FF0.tmp,C:\\xampp\\htdocs\\ebook\\bootstrap\\cache/packages.php): Access is denied (code: 5) at C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php:233)
+[stacktrace]
+#0 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(258): Illuminate/Foundation/Bootstrap/HandleExceptions->handleError(2, 'rename(C://xampp...', 'C://xampp//htdocs...', 233)
+#1 [internal function]: Illuminate/Foundation/Bootstrap/HandleExceptions->Illuminate/Foundation/Bootstrap/{closure}(2, 'rename(C://xampp...', 'C://xampp//htdocs...', 233)
+#2 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php(233): rename('C://xampp//htdocs...', 'C://xampp//htdocs...')
+#3 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php(182): Illuminate/Filesystem/Filesystem->replace('C://xampp//htdocs...', '<?php return ar...')
+#4 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php(132): Illuminate/Foundation/PackageManifest->write(Array)
+#5 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php(108): Illuminate/Foundation/PackageManifest->build()
+#6 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php(91): Illuminate/Foundation/PackageManifest->getManifest()
+#7 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php(80): Illuminate/Foundation/PackageManifest->config('aliases')
+#8 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/RegisterFacades.php(26): Illuminate/Foundation/PackageManifest->aliases()
+#9 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(342): Illuminate/Foundation/Bootstrap/RegisterFacades->bootstrap(Object(Illuminate/Foundation/Application))
+#10 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(474): Illuminate/Foundation/Application->bootstrapWith(Array)
+#11 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(196): Illuminate/Foundation/Console/Kernel->bootstrap()
+#12 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1235): Illuminate/Foundation/Console/Kernel->handle(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#13 C:/xampp/htdocs/ebook/artisan(16): Illuminate/Foundation/Application->handleCommand(Object(Symfony/Component/Console/Input/ArgvInput))
+#14 {main}
+"} 
+[2026-02-24 05:31:38] local.ERROR: __VSCODE_LARAVEL_STARTUP_ERROR__: rename(C:\xampp\htdocs\ebook\bootstrap\cache\pac3001.tmp,C:\xampp\htdocs\ebook\bootstrap\cache/packages.php): Access is denied (code: 5) {"exception":"[object] (Error(code: 0): __VSCODE_LARAVEL_STARTUP_ERROR__: rename(C:\\xampp\\htdocs\\ebook\\bootstrap\\cache\\pac3001.tmp,C:\\xampp\\htdocs\\ebook\\bootstrap\\cache/packages.php): Access is denied (code: 5) at C:/xampp/htdocs/ebook/vendor/_laravel_ide/discover-31b934f114eabc246b541addb8b458e3.php:33)
+[stacktrace]
+#0 C:/xampp/htdocs/ebook/vendor/_laravel_ide/discover-31b934f114eabc246b541addb8b458e3.php(62): LaravelVsCode::startupError(Object(ErrorException))
+#1 {main}
+"} 
+[2026-02-24 05:31:38] local.ERROR: __VSCODE_LARAVEL_STARTUP_ERROR__: rename(C:\xampp\htdocs\ebook\bootstrap\cache\pac3005.tmp,C:\xampp\htdocs\ebook\bootstrap\cache/packages.php): Access is denied (code: 5) {"exception":"[object] (Error(code: 0): __VSCODE_LARAVEL_STARTUP_ERROR__: rename(C:\\xampp\\htdocs\\ebook\\bootstrap\\cache\\pac3005.tmp,C:\\xampp\\htdocs\\ebook\\bootstrap\\cache/packages.php): Access is denied (code: 5) at C:/xampp/htdocs/ebook/vendor/_laravel_ide/discover-016c8ef007628f93e3ad930719f73821.php:33)
+[stacktrace]
+#0 C:/xampp/htdocs/ebook/vendor/_laravel_ide/discover-016c8ef007628f93e3ad930719f73821.php(62): LaravelVsCode::startupError(Object(ErrorException))
+#1 {main}
+"} 
+[2026-02-24 05:31:38] local.ERROR: __VSCODE_LARAVEL_STARTUP_ERROR__: rename(C:\xampp\htdocs\ebook\bootstrap\cache\pac3003.tmp,C:\xampp\htdocs\ebook\bootstrap\cache/packages.php): Access is denied (code: 5) {"exception":"[object] (Error(code: 0): __VSCODE_LARAVEL_STARTUP_ERROR__: rename(C:\\xampp\\htdocs\\ebook\\bootstrap\\cache\\pac3003.tmp,C:\\xampp\\htdocs\\ebook\\bootstrap\\cache/packages.php): Access is denied (code: 5) at C:/xampp/htdocs/ebook/vendor/_laravel_ide/discover-f5442aeac73a6a9021bd7ce113d6a606.php:33)
+[stacktrace]
+#0 C:/xampp/htdocs/ebook/vendor/_laravel_ide/discover-f5442aeac73a6a9021bd7ce113d6a606.php(62): LaravelVsCode::startupError(Object(ErrorException))
+#1 {main}
+"} 
+[2026-02-24 05:31:38] local.ERROR: __VSCODE_LARAVEL_STARTUP_ERROR__: rename(C:\xampp\htdocs\ebook\bootstrap\cache\pac2FF1.tmp,C:\xampp\htdocs\ebook\bootstrap\cache/packages.php): Access is denied (code: 5) {"exception":"[object] (Error(code: 0): __VSCODE_LARAVEL_STARTUP_ERROR__: rename(C:\\xampp\\htdocs\\ebook\\bootstrap\\cache\\pac2FF1.tmp,C:\\xampp\\htdocs\\ebook\\bootstrap\\cache/packages.php): Access is denied (code: 5) at C:/xampp/htdocs/ebook/vendor/_laravel_ide/discover-5b6a8384942db1c03ab2ddca280c9dbf.php:33)
+[stacktrace]
+#0 C:/xampp/htdocs/ebook/vendor/_laravel_ide/discover-5b6a8384942db1c03ab2ddca280c9dbf.php(62): LaravelVsCode::startupError(Object(ErrorException))
+#1 {main}
+"} 
+[2026-02-24 05:31:38] local.ERROR: __VSCODE_LARAVEL_STARTUP_ERROR__: rename(C:\xampp\htdocs\ebook\bootstrap\cache\pac307C.tmp,C:\xampp\htdocs\ebook\bootstrap\cache\packages.php): Access is denied (code: 5) {"exception":"[object] (Error(code: 0): __VSCODE_LARAVEL_STARTUP_ERROR__: rename(C:\\xampp\\htdocs\\ebook\\bootstrap\\cache\\pac307C.tmp,C:\\xampp\\htdocs\\ebook\\bootstrap\\cache\\packages.php): Access is denied (code: 5) at C:/xampp/htdocs/ebook/vendor/_laravel_ide/discover-af6a300c8cbdb761fde4dbad46137744.php:33)
+[stacktrace]
+#0 C:/xampp/htdocs/ebook/vendor/_laravel_ide/discover-af6a300c8cbdb761fde4dbad46137744.php(62): LaravelVsCode::startupError(Object(ErrorException))
+#1 {main}
+"} 
+[2026-02-24 05:31:38] local.ERROR: __VSCODE_LARAVEL_STARTUP_ERROR__: rename(C:\xampp\htdocs\ebook\bootstrap\cache\pac3004.tmp,C:\xampp\htdocs\ebook\bootstrap\cache/packages.php): Access is denied (code: 5) {"exception":"[object] (Error(code: 0): __VSCODE_LARAVEL_STARTUP_ERROR__: rename(C:\\xampp\\htdocs\\ebook\\bootstrap\\cache\\pac3004.tmp,C:\\xampp\\htdocs\\ebook\\bootstrap\\cache/packages.php): Access is denied (code: 5) at C:/xampp/htdocs/ebook/vendor/_laravel_ide/discover-19804082b122017c46bdac205a3a1912.php:33)
+[stacktrace]
+#0 C:/xampp/htdocs/ebook/vendor/_laravel_ide/discover-19804082b122017c46bdac205a3a1912.php(62): LaravelVsCode::startupError(Object(ErrorException))
+#1 {main}
+"} 
+[2026-02-24 05:31:38] local.ERROR: __VSCODE_LARAVEL_STARTUP_ERROR__: rename(C:\xampp\htdocs\ebook\bootstrap\cache\pac2FF2.tmp,C:\xampp\htdocs\ebook\bootstrap\cache/packages.php): Access is denied (code: 5) {"exception":"[object] (Error(code: 0): __VSCODE_LARAVEL_STARTUP_ERROR__: rename(C:\\xampp\\htdocs\\ebook\\bootstrap\\cache\\pac2FF2.tmp,C:\\xampp\\htdocs\\ebook\\bootstrap\\cache/packages.php): Access is denied (code: 5) at C:/xampp/htdocs/ebook/vendor/_laravel_ide/discover-69e789b19f48e0c16b9e02ccbcd21a11.php:33)
+[stacktrace]
+#0 C:/xampp/htdocs/ebook/vendor/_laravel_ide/discover-69e789b19f48e0c16b9e02ccbcd21a11.php(62): LaravelVsCode::startupError(Object(ErrorException))
+#1 {main}
+"} 
+[2026-02-24 05:31:38] local.ERROR: __VSCODE_LARAVEL_STARTUP_ERROR__: rename(C:\xampp\htdocs\ebook\bootstrap\cache\pac3002.tmp,C:\xampp\htdocs\ebook\bootstrap\cache/packages.php): Access is denied (code: 5) {"exception":"[object] (Error(code: 0): __VSCODE_LARAVEL_STARTUP_ERROR__: rename(C:\\xampp\\htdocs\\ebook\\bootstrap\\cache\\pac3002.tmp,C:\\xampp\\htdocs\\ebook\\bootstrap\\cache/packages.php): Access is denied (code: 5) at C:/xampp/htdocs/ebook/vendor/_laravel_ide/discover-cfae44312a91110c691459b4106ded61.php:33)
+[stacktrace]
+#0 C:/xampp/htdocs/ebook/vendor/_laravel_ide/discover-cfae44312a91110c691459b4106ded61.php(62): LaravelVsCode::startupError(Object(ErrorException))
+#1 {main}
+"} 
+[2026-02-24 05:31:38] local.ERROR: __VSCODE_LARAVEL_STARTUP_ERROR__: rename(C:\xampp\htdocs\ebook\bootstrap\cache\pac305C.tmp,C:\xampp\htdocs\ebook\bootstrap\cache\packages.php): Access is denied (code: 5) {"exception":"[object] (Error(code: 0): __VSCODE_LARAVEL_STARTUP_ERROR__: rename(C:\\xampp\\htdocs\\ebook\\bootstrap\\cache\\pac305C.tmp,C:\\xampp\\htdocs\\ebook\\bootstrap\\cache\\packages.php): Access is denied (code: 5) at C:/xampp/htdocs/ebook/vendor/_laravel_ide/discover-7563160ca998bde672640aa1e68dfd08.php:33)
+[stacktrace]
+#0 C:/xampp/htdocs/ebook/vendor/_laravel_ide/discover-7563160ca998bde672640aa1e68dfd08.php(62): LaravelVsCode::startupError(Object(ErrorException))
+#1 {main}
+"} 
+[2026-02-24 05:31:38] local.ERROR: __VSCODE_LARAVEL_STARTUP_ERROR__: rename(C:\xampp\htdocs\ebook\bootstrap\cache\pac306C.tmp,C:\xampp\htdocs\ebook\bootstrap\cache\packages.php): Access is denied (code: 5) {"exception":"[object] (Error(code: 0): __VSCODE_LARAVEL_STARTUP_ERROR__: rename(C:\\xampp\\htdocs\\ebook\\bootstrap\\cache\\pac306C.tmp,C:\\xampp\\htdocs\\ebook\\bootstrap\\cache\\packages.php): Access is denied (code: 5) at C:/xampp/htdocs/ebook/vendor/_laravel_ide/discover-af6a300c8cbdb761fde4dbad46137744.php:33)
+[stacktrace]
+#0 C:/xampp/htdocs/ebook/vendor/_laravel_ide/discover-af6a300c8cbdb761fde4dbad46137744.php(62): LaravelVsCode::startupError(Object(ErrorException))
+#1 {main}
+"} 
+[2026-02-24 05:31:38] local.ERROR: __VSCODE_LARAVEL_STARTUP_ERROR__: rename(C:\xampp\htdocs\ebook\bootstrap\cache\ser3138.tmp,C:\xampp\htdocs\ebook\bootstrap\cache\services.php): Access is denied (code: 5) {"exception":"[object] (Error(code: 0): __VSCODE_LARAVEL_STARTUP_ERROR__: rename(C:\\xampp\\htdocs\\ebook\\bootstrap\\cache\\ser3138.tmp,C:\\xampp\\htdocs\\ebook\\bootstrap\\cache\\services.php): Access is denied (code: 5) at C:/xampp/htdocs/ebook/vendor/_laravel_ide/discover-5b6a8384942db1c03ab2ddca280c9dbf.php:33)
+[stacktrace]
+#0 C:/xampp/htdocs/ebook/vendor/_laravel_ide/discover-5b6a8384942db1c03ab2ddca280c9dbf.php(62): LaravelVsCode::startupError(Object(ErrorException))
+#1 {main}
+"} 
+[2026-02-24 05:31:38] local.ERROR: rename(C:\xampp\htdocs\ebook\bootstrap\cache\ser3156.tmp,C:\xampp\htdocs\ebook\bootstrap\cache\services.php): Access is denied (code: 5) {"exception":"[object] (ErrorException(code: 0): rename(C:\\xampp\\htdocs\\ebook\\bootstrap\\cache\\ser3156.tmp,C:\\xampp\\htdocs\\ebook\\bootstrap\\cache\\services.php): Access is denied (code: 5) at C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php:233)
+[stacktrace]
+#0 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(258): Illuminate/Foundation/Bootstrap/HandleExceptions->handleError(2, 'rename(C://xampp...', 'C://xampp//htdocs...', 233)
+#1 [internal function]: Illuminate/Foundation/Bootstrap/HandleExceptions->Illuminate/Foundation/Bootstrap/{closure}(2, 'rename(C://xampp...', 'C://xampp//htdocs...', 233)
+#2 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php(233): rename('C://xampp//htdocs...', 'C://xampp//htdocs...')
+#3 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php(191): Illuminate/Filesystem/Filesystem->replace('C://xampp//htdocs...', '<?php return ar...')
+#4 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php(163): Illuminate/Foundation/ProviderRepository->writeManifest(Array)
+#5 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php(61): Illuminate/Foundation/ProviderRepository->compileManifest(Array)
+#6 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(871): Illuminate/Foundation/ProviderRepository->load(Array)
+#7 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/RegisterProviders.php(37): Illuminate/Foundation/Application->registerConfiguredProviders()
+#8 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(342): Illuminate/Foundation/Bootstrap/RegisterProviders->bootstrap(Object(Illuminate/Foundation/Application))
+#9 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(474): Illuminate/Foundation/Application->bootstrapWith(Array)
+#10 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(196): Illuminate/Foundation/Console/Kernel->bootstrap()
+#11 Command line code(1): Illuminate/Foundation/Console/Kernel->handle(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#12 {main}
+"} 
+[2026-02-24 05:44:58] local.ERROR: SQLSTATE[HY000]: General error: 1205 Lock wait timeout exceeded; try restarting transaction (Connection: mysql, SQL: update `sessions` set `payload` = YTozOntzOjY6Il90b2tlbiI7czo0MDoibEVUekNZZDFhcjZoZURzS0RNZGlaN05xSkpQRklneTNWZ0FmUmU0ZiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=, `last_activity` = 1771911847, `user_id` = ?, `ip_address` = 127.0.0.1, `user_agent` = Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 where `id` = IeCTMhLJdgDoRbV4BuFUhqeWCkuZozbiiV17koZS) {"exception":"[object] (Illuminate\\Database\\QueryException(code: HY000): SQLSTATE[HY000]: General error: 1205 Lock wait timeout exceeded; try restarting transaction (Connection: mysql, SQL: update `sessions` set `payload` = YTozOntzOjY6Il90b2tlbiI7czo0MDoibEVUekNZZDFhcjZoZURzS0RNZGlaN05xSkpQRklneTNWZ0FmUmU0ZiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=, `last_activity` = 1771911847, `user_id` = ?, `ip_address` = 127.0.0.1, `user_agent` = Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 where `id` = IeCTMhLJdgDoRbV4BuFUhqeWCkuZozbiiV17koZS) at C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Database/Connection.php:825)
+[stacktrace]
+#0 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Database/Connection.php(779): Illuminate/Database/Connection->runQueryCallback('update `session...', Array, Object(Closure))
+#1 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Database/Connection.php(584): Illuminate/Database/Connection->run('update `session...', Array, Object(Closure))
+#2 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Database/Connection.php(536): Illuminate/Database/Connection->affectingStatement('update `session...', Array)
+#3 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php(3830): Illuminate/Database/Connection->update('update `session...', Array)
+#4 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Session/DatabaseSessionHandler.php(173): Illuminate/Database/Query/Builder->update(Object(Illuminate/Support/Collection))
+#5 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Session/DatabaseSessionHandler.php(140): Illuminate/Session/DatabaseSessionHandler->performUpdate('IeCTMhLJdgDoRbV...', Array)
+#6 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Session/Store.php(176): Illuminate/Session/DatabaseSessionHandler->write('IeCTMhLJdgDoRbV...', 'a:3:{s:6:\"_toke...')
+#7 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Session/Middleware/StartSession.php(245): Illuminate/Session/Store->save()
+#8 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Session/Middleware/StartSession.php(130): Illuminate/Session/Middleware/StartSession->saveSession(Object(Illuminate/Http/Request))
+#9 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Session/Middleware/StartSession.php(64): Illuminate/Session/Middleware/StartSession->handleStatefulRequest(Object(Illuminate/Http/Request), Object(Illuminate/Session/Store), Object(Closure))
+#10 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate/Session/Middleware/StartSession->handle(Object(Illuminate/Http/Request), Object(Closure))
+#11 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Cookie/Middleware/AddQueuedCookiesToResponse.php(37): Illuminate/Pipeline/Pipeline->Illuminate/Pipeline/{closure}(Object(Illuminate/Http/Request))
+#12 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate/Cookie/Middleware/AddQueuedCookiesToResponse->handle(Object(Illuminate/Http/Request), Object(Closure))
+#13 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Cookie/Middleware/EncryptCookies.php(75): Illuminate/Pipeline/Pipeline->Illuminate/Pipeline/{closure}(Object(Illuminate/Http/Request))
+#14 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate/Cookie/Middleware/EncryptCookies->handle(Object(Illuminate/Http/Request), Object(Closure))
+#15 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(127): Illuminate/Pipeline/Pipeline->Illuminate/Pipeline/{closure}(Object(Illuminate/Http/Request))
+#16 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Routing/Router.php(807): Illuminate/Pipeline/Pipeline->then(Object(Closure))
+#17 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Routing/Router.php(786): Illuminate/Routing/Router->runRouteWithinStack(Object(Illuminate/Routing/Route), Object(Illuminate/Http/Request))
+#18 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Routing/Router.php(750): Illuminate/Routing/Router->runRoute(Object(Illuminate/Http/Request), Object(Illuminate/Routing/Route))
+#19 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Routing/Router.php(739): Illuminate/Routing/Router->dispatchToRoute(Object(Illuminate/Http/Request))
+#20 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(201): Illuminate/Routing/Router->dispatch(Object(Illuminate/Http/Request))
+#21 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(170): Illuminate/Foundation/Http/Kernel->Illuminate/Foundation/Http/{closure}(Object(Illuminate/Http/Request))
+#22 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate/Pipeline/Pipeline->Illuminate/Pipeline/{closure}(Object(Illuminate/Http/Request))
+#23 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull.php(31): Illuminate/Foundation/Http/Middleware/TransformsRequest->handle(Object(Illuminate/Http/Request), Object(Closure))
+#24 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull->handle(Object(Illuminate/Http/Request), Object(Closure))
+#25 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate/Pipeline/Pipeline->Illuminate/Pipeline/{closure}(Object(Illuminate/Http/Request))
+#26 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TrimStrings.php(51): Illuminate/Foundation/Http/Middleware/TransformsRequest->handle(Object(Illuminate/Http/Request), Object(Closure))
+#27 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate/Foundation/Http/Middleware/TrimStrings->handle(Object(Illuminate/Http/Request), Object(Closure))
+#28 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Http/Middleware/ValidatePostSize.php(27): Illuminate/Pipeline/Pipeline->Illuminate/Pipeline/{closure}(Object(Illuminate/Http/Request))
+#29 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate/Http/Middleware/ValidatePostSize->handle(Object(Illuminate/Http/Request), Object(Closure))
+#30 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/PreventRequestsDuringMaintenance.php(110): Illuminate/Pipeline/Pipeline->Illuminate/Pipeline/{closure}(Object(Illuminate/Http/Request))
+#31 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate/Foundation/Http/Middleware/PreventRequestsDuringMaintenance->handle(Object(Illuminate/Http/Request), Object(Closure))
+#32 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Http/Middleware/HandleCors.php(49): Illuminate/Pipeline/Pipeline->Illuminate/Pipeline/{closure}(Object(Illuminate/Http/Request))
+#33 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate/Http/Middleware/HandleCors->handle(Object(Illuminate/Http/Request), Object(Closure))
+#34 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Http/Middleware/TrustProxies.php(58): Illuminate/Pipeline/Pipeline->Illuminate/Pipeline/{closure}(Object(Illuminate/Http/Request))
+#35 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate/Http/Middleware/TrustProxies->handle(Object(Illuminate/Http/Request), Object(Closure))
+#36 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/InvokeDeferredCallbacks.php(22): Illuminate/Pipeline/Pipeline->Illuminate/Pipeline/{closure}(Object(Illuminate/Http/Request))
+#37 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate/Foundation/Http/Middleware/InvokeDeferredCallbacks->handle(Object(Illuminate/Http/Request), Object(Closure))
+#38 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(127): Illuminate/Pipeline/Pipeline->Illuminate/Pipeline/{closure}(Object(Illuminate/Http/Request))
+#39 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(176): Illuminate/Pipeline/Pipeline->then(Object(Closure))
+#40 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(145): Illuminate/Foundation/Http/Kernel->sendRequestThroughRouter(Object(Illuminate/Http/Request))
+#41 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1220): Illuminate/Foundation/Http/Kernel->handle(Object(Illuminate/Http/Request))
+#42 C:/xampp/htdocs/ebook/public/index.php(20): Illuminate/Foundation/Application->handleRequest(Object(Illuminate/Http/Request))
+#43 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('C://xampp//htdocs...')
+#44 {main}
+
+[previous exception] [object] (PDOException(code: HY000): SQLSTATE[HY000]: General error: 1205 Lock wait timeout exceeded; try restarting transaction at C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Database/Connection.php:596)
+[stacktrace]
+#0 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Database/Connection.php(596): PDOStatement->execute()
+#1 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Database/Connection.php(812): Illuminate/Database/Connection->Illuminate/Database/{closure}('update `session...', Array)
+#2 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Database/Connection.php(779): Illuminate/Database/Connection->runQueryCallback('update `session...', Array, Object(Closure))
+#3 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Database/Connection.php(584): Illuminate/Database/Connection->run('update `session...', Array, Object(Closure))
+#4 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Database/Connection.php(536): Illuminate/Database/Connection->affectingStatement('update `session...', Array)
+#5 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php(3830): Illuminate/Database/Connection->update('update `session...', Array)
+#6 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Session/DatabaseSessionHandler.php(173): Illuminate/Database/Query/Builder->update(Object(Illuminate/Support/Collection))
+#7 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Session/DatabaseSessionHandler.php(140): Illuminate/Session/DatabaseSessionHandler->performUpdate('IeCTMhLJdgDoRbV...', Array)
+#8 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Session/Store.php(176): Illuminate/Session/DatabaseSessionHandler->write('IeCTMhLJdgDoRbV...', 'a:3:{s:6:\"_toke...')
+#9 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Session/Middleware/StartSession.php(245): Illuminate/Session/Store->save()
+#10 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Session/Middleware/StartSession.php(130): Illuminate/Session/Middleware/StartSession->saveSession(Object(Illuminate/Http/Request))
+#11 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Session/Middleware/StartSession.php(64): Illuminate/Session/Middleware/StartSession->handleStatefulRequest(Object(Illuminate/Http/Request), Object(Illuminate/Session/Store), Object(Closure))
+#12 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate/Session/Middleware/StartSession->handle(Object(Illuminate/Http/Request), Object(Closure))
+#13 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Cookie/Middleware/AddQueuedCookiesToResponse.php(37): Illuminate/Pipeline/Pipeline->Illuminate/Pipeline/{closure}(Object(Illuminate/Http/Request))
+#14 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate/Cookie/Middleware/AddQueuedCookiesToResponse->handle(Object(Illuminate/Http/Request), Object(Closure))
+#15 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Cookie/Middleware/EncryptCookies.php(75): Illuminate/Pipeline/Pipeline->Illuminate/Pipeline/{closure}(Object(Illuminate/Http/Request))
+#16 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate/Cookie/Middleware/EncryptCookies->handle(Object(Illuminate/Http/Request), Object(Closure))
+#17 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(127): Illuminate/Pipeline/Pipeline->Illuminate/Pipeline/{closure}(Object(Illuminate/Http/Request))
+#18 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Routing/Router.php(807): Illuminate/Pipeline/Pipeline->then(Object(Closure))
+#19 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Routing/Router.php(786): Illuminate/Routing/Router->runRouteWithinStack(Object(Illuminate/Routing/Route), Object(Illuminate/Http/Request))
+#20 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Routing/Router.php(750): Illuminate/Routing/Router->runRoute(Object(Illuminate/Http/Request), Object(Illuminate/Routing/Route))
+#21 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Routing/Router.php(739): Illuminate/Routing/Router->dispatchToRoute(Object(Illuminate/Http/Request))
+#22 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(201): Illuminate/Routing/Router->dispatch(Object(Illuminate/Http/Request))
+#23 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(170): Illuminate/Foundation/Http/Kernel->Illuminate/Foundation/Http/{closure}(Object(Illuminate/Http/Request))
+#24 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate/Pipeline/Pipeline->Illuminate/Pipeline/{closure}(Object(Illuminate/Http/Request))
+#25 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull.php(31): Illuminate/Foundation/Http/Middleware/TransformsRequest->handle(Object(Illuminate/Http/Request), Object(Closure))
+#26 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull->handle(Object(Illuminate/Http/Request), Object(Closure))
+#27 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate/Pipeline/Pipeline->Illuminate/Pipeline/{closure}(Object(Illuminate/Http/Request))
+#28 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TrimStrings.php(51): Illuminate/Foundation/Http/Middleware/TransformsRequest->handle(Object(Illuminate/Http/Request), Object(Closure))
+#29 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate/Foundation/Http/Middleware/TrimStrings->handle(Object(Illuminate/Http/Request), Object(Closure))
+#30 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Http/Middleware/ValidatePostSize.php(27): Illuminate/Pipeline/Pipeline->Illuminate/Pipeline/{closure}(Object(Illuminate/Http/Request))
+#31 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate/Http/Middleware/ValidatePostSize->handle(Object(Illuminate/Http/Request), Object(Closure))
+#32 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/PreventRequestsDuringMaintenance.php(110): Illuminate/Pipeline/Pipeline->Illuminate/Pipeline/{closure}(Object(Illuminate/Http/Request))
+#33 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate/Foundation/Http/Middleware/PreventRequestsDuringMaintenance->handle(Object(Illuminate/Http/Request), Object(Closure))
+#34 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Http/Middleware/HandleCors.php(49): Illuminate/Pipeline/Pipeline->Illuminate/Pipeline/{closure}(Object(Illuminate/Http/Request))
+#35 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate/Http/Middleware/HandleCors->handle(Object(Illuminate/Http/Request), Object(Closure))
+#36 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Http/Middleware/TrustProxies.php(58): Illuminate/Pipeline/Pipeline->Illuminate/Pipeline/{closure}(Object(Illuminate/Http/Request))
+#37 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate/Http/Middleware/TrustProxies->handle(Object(Illuminate/Http/Request), Object(Closure))
+#38 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/InvokeDeferredCallbacks.php(22): Illuminate/Pipeline/Pipeline->Illuminate/Pipeline/{closure}(Object(Illuminate/Http/Request))
+#39 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate/Foundation/Http/Middleware/InvokeDeferredCallbacks->handle(Object(Illuminate/Http/Request), Object(Closure))
+#40 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(127): Illuminate/Pipeline/Pipeline->Illuminate/Pipeline/{closure}(Object(Illuminate/Http/Request))
+#41 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(176): Illuminate/Pipeline/Pipeline->then(Object(Closure))
+#42 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(145): Illuminate/Foundation/Http/Kernel->sendRequestThroughRouter(Object(Illuminate/Http/Request))
+#43 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1220): Illuminate/Foundation/Http/Kernel->handle(Object(Illuminate/Http/Request))
+#44 C:/xampp/htdocs/ebook/public/index.php(20): Illuminate/Foundation/Application->handleRequest(Object(Illuminate/Http/Request))
+#45 C:/xampp/htdocs/ebook/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('C://xampp//htdocs...')
+#46 {main}
+"} 
