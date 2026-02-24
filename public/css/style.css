@@ -1003,9 +1003,10 @@ body.ebook-view .page {
 }
 
 
-/* Custom Navbar with Warning Top Line */
+/* Custom Navbar with Warning Top Line (User pages only) */
 
-.custom-navbar {
+body.dashboard-page .custom-navbar,
+body.ebook-home .custom-navbar {
     background: #f3f3f3 !important;
     /* Always solid */
 

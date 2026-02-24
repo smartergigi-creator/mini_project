@@ -21,7 +21,7 @@
 
 /* Active menu */
 #sidebar .sidebar-item.active .sidebar-link {
-    background: #1abad4 !important;
+    background: #1aacc4 !important;
     color: #000000 !important;
     border-left: 4px solid #ffdc73;
 }
@@ -91,12 +91,17 @@
     position: sticky;
     top: 0;
     z-index: 1020;
-    background: #1abad4 !important;
+    background: #1aacc4 !important;
     border-top: none !important;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
     margin-top: 0 !important;
     padding-left: 2rem;
     padding-right: 2rem;
+}
+
+body #main .custom-navbar {
+    background: #1aacc4 !important;
+    border-top: none !important;
 }
 
 body.sidebar-collapsed .custom-navbar {
@@ -377,7 +382,7 @@ body.sidebar-collapsed #sidebar .sidebar-toggle-desktop {
 }
 
 .admin-dashboard .stat-card .card-body {
-    border-top: 4px solid #1abad4;
+    border-top: 4px solid #1aacc4;
     border-radius: 14px;
     background: linear-gradient(180deg, #f8fdff 0%, #eef9fc 100%);
 }
@@ -417,7 +422,7 @@ body.sidebar-collapsed #sidebar .sidebar-toggle-desktop {
 }
 
 .admin-dashboard .card-header.bg-primary {
-    background: linear-gradient(90deg, #1abad4 0%, #1aa7bf 100%) !important;
+    background: linear-gradient(90deg, #1aacc4 0%, #1aa7bf 100%) !important;
     border-bottom: none;
     padding-top: 1rem;
     padding-bottom: 1rem;
@@ -457,8 +462,8 @@ body.sidebar-collapsed #sidebar .sidebar-toggle-desktop {
 }
 
 .admin-dashboard .form-check-input:checked {
-    background-color: #1abad4;
-    border-color: #1abad4;
+    background-color: #1aacc4;
+    border-color: #1aacc4;
 }
 
 .admin-dashboard .form-control.form-control-sm {
@@ -469,13 +474,13 @@ body.sidebar-collapsed #sidebar .sidebar-toggle-desktop {
 }
 
 .admin-dashboard .form-control.form-control-sm:focus {
-    border-color: #1abad4;
+    border-color: #1aacc4;
     box-shadow: 0 0 0 0.15rem rgba(26, 186, 212, 0.2);
 }
 
 .admin-dashboard .btn-success {
-    background: #1abad4 !important;
-    border-color: #1abad4 !important;
+    background: #1aacc4 !important;
+    border-color: #1aacc4 !important;
 }
 
 .admin-dashboard .btn-success:hover {
@@ -606,7 +611,7 @@ body.sidebar-collapsed #sidebar .sidebar-toggle-desktop {
 .admin-users-card .card-header {
     border-bottom: none;
     padding: 1rem 1.5rem;
-    background: linear-gradient(90deg, #1abad4, #0ea5e9) !important;
+    background: linear-gradient(90deg, #1aacc4, #0ea5e9) !important;
 }
 
 .admin-users-card thead {
@@ -717,8 +722,8 @@ body.sidebar-collapsed #sidebar .sidebar-toggle-desktop {
    ADMIN THEME BUTTON COLORS
 ================================ */
 .admin-dashboard .btn-primary {
-    background-color: #1abad4;
-    border-color: #1abad4;
+    background-color: #1aacc4;
+    border-color: #1aacc4;
     color: #fff;
 }
 
@@ -786,8 +791,8 @@ body.sidebar-collapsed #sidebar .sidebar-toggle-desktop {
 }
 
 .admin-category-page .category-add-btn {
-    background: #1abad4;
-    border-color: #1abad4;
+    background: #1aacc4;
+    border-color: #1aacc4;
     color: #fff;
     font-weight: 600;
     border-radius: 10px;
@@ -856,7 +861,7 @@ body.sidebar-collapsed #sidebar .sidebar-toggle-desktop {
 
 .admin-category-page .form-control:focus,
 .admin-category-page .form-select:focus {
-    border-color: #1abad4;
+    border-color: #1aacc4;
     box-shadow: 0 0 0 0.15rem rgba(26, 186, 212, 0.2);
 }
 
@@ -972,3 +977,4 @@ body.sidebar-collapsed #sidebar .sidebar-toggle-desktop {
 .admin-category-page .category-table td:last-child {
     padding-right: 1.1rem !important;
 }
+
