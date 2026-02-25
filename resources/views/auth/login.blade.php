@@ -18,7 +18,7 @@
             <div class="brand-panel">
                 <div class="brand-mark">
                     <span class="brand-logo" aria-hidden="true">
-                        <img src="{{ file_exists(public_path('dist/asset/image/logo/logo.png')) ? asset('dist/asset/image/logo/logo.png') : asset('admin/dist/assets/images/logo/logo.png') }}"
+                        <img src="{{ asset('admin/dist/assets/images/logo/logo.png') }}"
                             alt="eBook Logo">
                     </span>
                     <span>eBook</span>
@@ -33,7 +33,7 @@
                 <div class="form-card">
                     <h2>
                         <span class="login-title-icon" aria-hidden="true">
-                            <img src="{{ file_exists(public_path('dist/asset/image/logo/logo.png')) ? asset('dist/asset/image/logo/logo.png') : asset('admin/dist/assets/images/logo/logo.png') }}"
+                            <img src="{{ asset('admin/dist/assets/images/logo/logo.png') }}"
                                 alt="eBook Logo">
                         </span>
                         <span>Login</span>
@@ -84,3 +84,4 @@
 </body>
 
 </html>
+

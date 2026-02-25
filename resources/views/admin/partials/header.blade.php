@@ -16,8 +16,8 @@
 <link rel="stylesheet" href="{{ asset('admin/dist/assets/vendors/bootstrap-icons/bootstrap-icons.css') }}">
 <link rel="stylesheet" href="{{ asset('admin/dist/assets/css/app.css') }}">
 
-<link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
-<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+<link rel="icon" type="image/png" href="{{ asset('admin/dist/assets/images/logo/logo.png') }}">
 
 <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
