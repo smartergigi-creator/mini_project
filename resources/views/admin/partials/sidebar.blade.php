@@ -44,9 +44,14 @@
 
                 @auth
 
-                    {{-- ✅ Admin Only --}}
+                    <li class="sidebar-item {{ request()->is('home') ? 'active' : '' }}">
+                        <a href="{{ url('/home') }}" class="sidebar-link">
+                            <i class="bi bi-house-door"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+
                     @if (auth()->user()->role === 'admin')
-                        <!-- Dashboard -->
                         <li class="sidebar-item {{ request()->is('admin/dashboard*') ? 'active' : '' }}">
                             <a href="{{ route('admin.dashboard') }}" class="sidebar-link">
                                 <i class="bi bi-grid-fill"></i>
@@ -54,9 +59,6 @@
                             </a>
                         </li>
                     @endif
-
-
-                    {{-- ✅ Admin + User (Both can see) --}}
 
                     @if (auth()->user()->role === 'admin')
                         <li class="sidebar-item {{ request()->is('admin/categories*') ? 'active' : '' }}">
@@ -67,20 +69,6 @@
                         </li>
                     @endif
 
-
-                    {{-- ✅ All Users --}}
-                    <li class="sidebar-item">
-                        <a href="{{ route('logout') }}" class="sidebar-link"
-                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            <i class="bi bi-box-arrow-right"></i>
-                            <span>Logout</span>
-                        </a>
-
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display:none;">
-                            @csrf
-                        </form>
-                    </li>
-
                 @endauth
 
             </ul>
@@ -90,5 +78,4 @@
     </div>
 
 </div>
-
 

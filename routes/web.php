@@ -29,9 +29,7 @@ Route::get('/', function () {
 
 Route::get('/login', function () {
     if (auth()->check()) {
-        return auth()->user()->role === 'admin'
-            ? redirect()->route('admin.dashboard')
-            : redirect('/home');
+        return redirect('/home');
     }
     return view('auth.login');
 })->name('login');
@@ -69,7 +67,7 @@ if (app()->environment('local')) {
             'serp_expiry' => now()->addDays(7)->toDateTimeString(),
         ]);
 
-        return redirect()->route('admin.dashboard');
+        return redirect('/home');
     })->name('dev.login');
 }
 

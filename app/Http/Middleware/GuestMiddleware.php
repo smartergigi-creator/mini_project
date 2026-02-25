@@ -11,7 +11,7 @@ class GuestMiddleware
     $token = $request->cookie('jwt_token');
 
     if ($token) {
-        return redirect('/dashboard');
+        return redirect('/home');
     }
 
     return $next($request);

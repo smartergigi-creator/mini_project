@@ -173,13 +173,6 @@ if (!session('serp_token')) {
     
 }
 
-
-$user = auth()->user();
-
-if ($user->role === 'admin') {
-    return redirect()->route('admin.dashboard');
-}
-
 return redirect('/home');
 
 
@@ -243,7 +236,7 @@ public function refreshToken()
             'serp_expiry'  => Carbon::parse($res->json('expiration')),
         ]);
 
-        return redirect('/dashboard');
+        return redirect('/home');
     }
 
     session()->flush();

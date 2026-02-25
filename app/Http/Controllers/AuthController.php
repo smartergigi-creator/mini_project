@@ -22,7 +22,7 @@ class AuthController extends Controller
 
             $request->session()->regenerate();
 
-            return redirect('/dashboard');
+            return redirect('/home');
         }
 
         return back()->with('error', 'Invalid email or password');

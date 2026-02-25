@@ -113,23 +113,37 @@
         </div>
 
         <!-- Right Side -->
-        <div class="d-flex align-items-center gap-2">
+        <div class="d-flex align-items-center ms-lg-3">
+            @auth
+                <div class="dropdown user-menu-dropdown">
+                    <button class="btn user-menu-toggle dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <span class="user-name">{{ auth()->user()->name ?? auth()->user()->email }}</span>
+                    </button>
 
-            <span class="user-name">
-                @if (auth()->check())
-                    {{ auth()->user()->name ?? auth()->user()->email }}
-                @else
-                    Guest!
-                @endif
-            </span>
-
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button class="logout-btn">
-                    <img src="{{ asset('images/logout.png') }}" alt="Logout">
-                </button>
-            </form>
-
+                    <ul class="dropdown-menu dropdown-menu-end user-menu-list">
+                        @if (auth()->user()->role === 'admin')
+                            <li>
+                                <a href="{{ route('admin.dashboard') }}" class="dropdown-item">Dashboard</a>
+                            </li>
+                        @endif
+                        <li>
+                            <a href="{{ url('/home') }}" class="dropdown-item">Home</a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="dropdown-item">Logout</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            @else
+                <span class="user-name">Guest!</span>
+            @endauth
         </div>
 
 
