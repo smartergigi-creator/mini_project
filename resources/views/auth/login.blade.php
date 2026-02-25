@@ -21,7 +21,7 @@
                         <img src="{{ asset('admin/dist/assets/images/logo/logo.png') }}"
                             alt="eBook Logo">
                     </span>
-                    <span>eBook</span>
+                    <span>UNITI</span>
                 </div>
                 <h1>Welcome to eBook Portal</h1>
                 <p class="tagline">Smart Digital Library Management</p>
@@ -84,4 +84,5 @@
 </body>
 
 </html>
+
 

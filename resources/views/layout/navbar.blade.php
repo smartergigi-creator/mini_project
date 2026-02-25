@@ -10,7 +10,7 @@
 
 
 
-            <span class="brand-text">eBook</span>
+            <span class="brand-text">UNITI</span>
         </a>
 
         <!-- Toggle (Mobile) -->
@@ -136,3 +136,4 @@
     </div>
 
 </nav>
+
