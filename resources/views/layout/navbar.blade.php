@@ -6,7 +6,7 @@
         <!-- Logo -->
         <a class="navbar-brand d-flex align-items-center" href="#">
 
-            <img src="{{ asset('admin/dist/assets/images/logo/logo.png') }}" width="60" alt="">
+            <img src="{{ asset('images/logo.png') }}" width="60" alt="">
 
 
 
@@ -136,4 +136,5 @@
     </div>
 
 </nav>
+
 

@@ -11,7 +11,7 @@
 
                 <!-- Logo -->
                 <div class="logo">
-                    <img style="width:80px; height:auto;" src="{{ asset('admin/dist/assets/images/logo/logo.png') }}">
+                    <img style="width:80px; height:auto;" src="{{ asset('images/logo.png') }}">
                     <span class="brand-text">UNITI</span>
                 </div>
 
@@ -90,4 +90,5 @@
     </div>
 
 </div>
+
 
