@@ -31,7 +31,11 @@ public function update(Request $request, $id)
     $uploadedCount = Ebook::where(function ($q) use ($user) {
         $q->where('user_id', $user->id)
             ->orWhere('uploaded_by', $user->id);
-    })->count();
+    })
+        ->when($user->upload_reset_at, function ($q, $resetAt) {
+            $q->where('created_at', '>', $resetAt);
+        })
+        ->count();
 
     $currentUploadLimit = (int) $user->upload_limit;
     $uploadReached = (bool) $user->can_upload

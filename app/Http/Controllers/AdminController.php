@@ -8,7 +8,6 @@ use App\Models\User;
 use App\Models\Ebook;
 use App\Models\Category;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 class AdminController extends Controller
@@ -27,7 +26,7 @@ public function dashboard()
     $reachedShareCounts = [];
 
     if (!empty($userIds)) {
-        $uploadRows = Ebook::select(['id', 'user_id', 'uploaded_by'])
+        $uploadRows = Ebook::select(['id', 'user_id', 'uploaded_by', 'created_at'])
             ->whereIn('user_id', $userIds)
             ->orWhereIn('uploaded_by', $userIds)
             ->get();
@@ -38,6 +37,11 @@ public function dashboard()
                 : $ebook->uploaded_by;
 
             if (!$ownerId) {
+                continue;
+            }
+
+            $resetAt = optional($users->getCollection()->firstWhere('id', $ownerId))->upload_reset_at;
+            if ($resetAt && $ebook->created_at && $ebook->created_at->lte($resetAt)) {
                 continue;
             }
 
@@ -113,27 +117,12 @@ public function dashboard()
 public function resetUserUploads($id)
 {
     $user = User::findOrFail($id);
-
-    $ebooks = Ebook::where('user_id', $user->id)
-        ->orWhere('uploaded_by', $user->id)
-        ->get();
-
-    foreach ($ebooks as $ebook) {
-        $ebook->pages()->delete();
-
-        $folderPath = public_path("ebooks/{$ebook->folder_path}");
-        if (File::exists($folderPath)) {
-            File::deleteDirectory($folderPath);
-        }
-
-        $ebook->delete();
-    }
-
+    $user->upload_reset_at = now();
     $user->can_upload = false;
     $user->upload_limit = 0;
     $user->save();
 
-    return back()->with('success', 'User uploads reset successfully.');
+    return back()->with('success', 'User upload usage reset successfully.');
 }
 
 public function resetUserShares($id)

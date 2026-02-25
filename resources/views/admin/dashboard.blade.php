@@ -176,7 +176,7 @@
                                                 form="update-user-{{ $user->id }}"
                                                 class="form-control form-control-sm text-center"
                                                 {{ $user->can_upload && !$uploadLocked ? '' : 'disabled' }}
-                                                value="{{ $user->upload_limit }}">
+                                                value="{{ old('upload_limit') !== null && old('id') == $user->id ? old('upload_limit') : $user->upload_limit }}">
                                             <small class="d-block mt-1 text-muted">
                                                 Used {{ $user->upload_used ?? 0 }} /
                                                 {{ (int) $user->upload_limit === 0 ? 'Unlimited' : (int) $user->upload_limit }}
@@ -235,7 +235,7 @@
                                                 <form method="POST" action="{{ route('admin.users.resetUploads', $user->id) }}">
                                                     @csrf
                                                     <button type="submit" class="btn btn-sm admin-action-btn admin-action-reset-upload"
-                                                        onclick="return confirm('Reset all uploads for this user?');">
+                                                        onclick="return confirm('Reset upload usage for this user? Existing ebooks will not be deleted.');">
                                                         <i class="bi bi-arrow-counterclockwise me-1"></i>
                                                         Reset Uploads
                                                     </button>

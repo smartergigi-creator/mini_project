@@ -12,7 +12,15 @@ class EbookShareController extends Controller
         try {
             $user = auth()->user();
 
-            if (!$user || !$user->can_share) {
+            if (!$user) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Unauthorized',
+                ], 401);
+            }
+
+            $hasShareAccess = $user->role === 'admin' || (bool) $user->can_share;
+            if (!$hasShareAccess) {
                 return response()->json([
                     'status' => false,
                     'message' => 'You are not allowed to share',
@@ -43,8 +51,8 @@ class EbookShareController extends Controller
                 ]);
             }
 
-            // share_limit: 0 => unlimited active shares, >0 => limited active shares.
-            $userShareLimit = (int) $user->share_limit;
+            // Admin has unlimited share access; users follow their configured limits.
+            $userShareLimit = $user->role === 'admin' ? 0 : (int) $user->share_limit;
             if ($userShareLimit > 0) {
                 $activeShares = Ebook::where('shared_by', $user->id)
                     ->where('share_enabled', 1)

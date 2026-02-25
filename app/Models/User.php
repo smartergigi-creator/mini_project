@@ -32,6 +32,7 @@ protected $fillable = [
     'can_share',
 
     'upload_limit',
+    'upload_reset_at',
     'share_limit',
 
     'status',
@@ -64,6 +65,7 @@ protected $fillable = [
             'can_upload' => 'boolean',
             'can_share' => 'boolean',
             'upload_limit' => 'integer',
+            'upload_reset_at' => 'datetime',
             'share_limit' => 'integer',
         ];
     }

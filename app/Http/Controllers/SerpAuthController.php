@@ -131,23 +131,28 @@ public function login(Request $request)
         $serpId = $request->username;
 
         // Create / Update user
- $user = User::updateOrCreate(
-    ['serp_id' => $serpId],
-    [
-        'name'         => $serp['name'] ?? $serpId,
-        'email'        => $serp['email'] ?? ($serpId . '@serp.local'),
-        'serp_token'   => $serp['token'] ?? null,
-        'status'       => 'active',
-        'created_from' => 'serp',
-       
-    ]
-);
+        $user = User::updateOrCreate(
+            ['serp_id' => $serpId],
+            [
+                'name' => $serp['name'] ?? $serpId,
+                'email' => $serp['email'] ?? ($serpId . '@serp.local'),
+                'serp_token' => $serp['token'] ?? null,
+                'status' => 'active',
+                'created_from' => 'serp',
+            ]
+        );
 
-// After login
-if (!$user->role) {
-    $user->role = 'user';
-    $user->save();
-}
+        if ($user->wasRecentlyCreated) {
+            $user->role = 'user';
+            $user->can_upload = false;
+            $user->can_share = false;
+            $user->upload_limit = 0;
+            $user->share_limit = 0;
+            $user->save();
+        } elseif (!$user->role) {
+            $user->role = 'user';
+            $user->save();
+        }
 
 
 
