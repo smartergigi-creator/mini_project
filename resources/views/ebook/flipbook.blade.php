@@ -80,4 +80,3 @@
         <audio id="flipSound" src="{{ asset('sound/page-flip-12.wav') }}" preload="auto"></audio>
     </div>
 @endsection
-

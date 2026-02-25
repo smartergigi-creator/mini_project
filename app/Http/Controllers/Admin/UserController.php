@@ -140,6 +140,18 @@ public function destroy($id)
             'max_views' => null,
         ]);
 
+        if (DB::getSchemaBuilder()->hasTable('ebook_shares')) {
+            DB::table('ebook_shares')
+                ->where('shared_by', $user->id)
+                ->delete();
+        }
+
+        if (DB::getSchemaBuilder()->hasTable('sessions')) {
+            DB::table('sessions')
+                ->where('user_id', $user->id)
+                ->delete();
+        }
+
         $user->delete();
 
         DB::commit();

@@ -3,8 +3,14 @@
 .env
 /storage/*.key
 /public/storage
+/storage/framework/
+/storage/logs/
 /public/ebooks
 /public/uploads
 
 .DS_Store
 Thumbs.db
+
+/storage/*.key
+
+
