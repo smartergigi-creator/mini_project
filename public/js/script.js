@@ -119,17 +119,33 @@ window.addEventListener("pageshow", (event) => {
         isInitRunning = true;
 
         const flipbook = document.getElementById("flipbook");
-        if (!flipbook) return;
-
-        waitForImages(() => {
-            detectPageRatio();
-            initFlipbook();
-
-            isReady = true;
+        if (!flipbook) {
             isInitRunning = false;
+            return;
+        }
 
-            hideLoader();
-        });
+        const initWhenReady = () => {
+            waitForImages(() => {
+                detectPageRatio();
+                initFlipbook();
+
+                isReady = true;
+                isInitRunning = false;
+
+                hideLoader();
+            });
+        };
+
+        if (window.__PDF_PAGES_READY_PROMISE__ instanceof Promise) {
+            window.__PDF_PAGES_READY_PROMISE__
+                .then(initWhenReady)
+                .catch(() => {
+                    isInitRunning = false;
+                });
+            return;
+        }
+
+        initWhenReady();
     }
 
     /* ===============================

@@ -6,11 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use App\Models\Ebook;
-use App\Models\EbookPage;
 
 use App\Models\Category;  
-
-use Illuminate\Support\Facades\DB;
 
 
 class EbookController extends Controller
@@ -241,13 +238,6 @@ public function store(Request $request)
                 'uploaded_by' => $user->id,
             ]);
 
-            // Pre-generate pages so home view can show first-page cover immediately.
-            try {
-                $this->ensurePagesExist($ebook);
-            } catch (\Throwable $e) {
-                // Keep upload successful even if preview generation fails for one file.
-            }
-
             $created++;
         }
 
@@ -388,57 +378,11 @@ public function store(Request $request)
 
 public function ensurePagesExist(Ebook $ebook)
 {
-    $pagesPath = public_path("ebooks/{$ebook->folder_path}/pages");
-
-    // If already in DB → skip
-    if ($ebook->pages()->count() > 0) {
-        return true;
-    }
-
     $pdfFile = public_path($ebook->pdf_path);
 
     if (!file_exists($pdfFile)) {
         return false;
     }
-
-    if (!file_exists($pagesPath)) {
-        mkdir($pagesPath, 0777, true);
-    }
-
-    $magick = "C:\\Program Files\\ImageMagick-7.1.2-Q16-HDRI\\magick.exe";
-
-    if (!file_exists($magick)) {
-        abort(500, 'ImageMagick not found');
-    }
-
-    // Convert PDF → JPG
-    $output = $pagesPath . "\\page_%03d.jpg";
-
-    exec("\"$magick\" -density 200 \"$pdfFile\" -quality 92 \"$output\"");
-
-    $images = glob($pagesPath . '/*.jpg');
-
-    if (!$images) {
-        return false;
-    }
-
-    sort($images);
-
-    // Save DB entries
-    foreach ($images as $index => $img) {
-
-        [$width, $height] = getimagesize($img);
-
-        EbookPage::create([
-            'ebook_id'   => $ebook->id,
-            'page_no'    => $index + 1,
-            'image_path' => str_replace(public_path(), '', $img),
-            'orientation'=> $width > $height ? 'landscape' : 'portrait',
-            'width'      => $width,
-            'height'     => $height,
-        ]);
-    }
-
     return true;
 }
 
@@ -449,22 +393,11 @@ public function ensurePagesExist(Ebook $ebook)
     {
         $ebook = Ebook::findOrFail($id);
 
-        if (!$this->ensurePagesExist($ebook)) {
-            abort(500, 'PDF conversion failed');
+        if (!file_exists(public_path($ebook->pdf_path))) {
+            abort(404, 'PDF file not found');
         }
 
-        $images = glob(public_path("ebooks/{$ebook->folder_path}/pages/*.jpg"));
-        natsort($images);
-
-        $ebook->page_count = count($images);
-        $ebook->save();
-
-        $pages = array_map(
-            fn ($img) => asset("ebooks/{$ebook->folder_path}/pages/" . basename($img)),
-            $images
-        );
-
-        return view('ebook.flipbook', compact('ebook', 'pages'));
+        return view('ebook.flipbook', compact('ebook'));
     }
 
     /* ======================================================

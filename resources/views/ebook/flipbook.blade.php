@@ -45,21 +45,6 @@
                     <div id="zoom-wrapper" class="position-relative">
                         <div id="ebook-scale">
                             <div id="flipbook">
-
-                                @if (!empty($pages) && isset($pages[0]))
-                                    <div class="page cover">
-                                        <img src="{{ $pages[0] }}" alt="Cover">
-                                    </div>
-                                @endif
-
-                                @foreach ($pages as $index => $img)
-                                    @if ($index !== 0)
-                                        <div class="page">
-                                            <img src="{{ $img }}" alt="Page {{ $index + 1 }}">
-                                        </div>
-                                    @endif
-                                @endforeach
-
                             </div>
                         </div>
 
@@ -79,4 +64,51 @@
 
         <audio id="flipSound" src="{{ asset('sound/page-flip-12.wav') }}" preload="auto"></audio>
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    <script>
+        (function() {
+            const flipbook = document.getElementById('flipbook');
+            const pdfUrl = @json(asset($ebook->pdf_path));
+
+            if (!flipbook || !window.pdfjsLib || !pdfUrl) {
+                return;
+            }
+
+            // Let existing flipbook script wait for this promise before init.
+            window.__PDF_PAGES_READY_PROMISE__ = (async () => {
+                pdfjsLib.GlobalWorkerOptions.workerSrc =
+                    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+
+                const pdf = await pdfjsLib.getDocument(pdfUrl).promise;
+
+                for (let i = 1; i <= pdf.numPages; i++) {
+                    const page = await pdf.getPage(i);
+                    const viewport = page.getViewport({
+                        scale: 1.5
+                    });
+
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    canvas.width = Math.floor(viewport.width);
+                    canvas.height = Math.floor(viewport.height);
+
+                    await page.render({
+                        canvasContext: ctx,
+                        viewport
+                    }).promise;
+
+                    const wrapper = document.createElement('div');
+                    wrapper.className = i === 1 ? 'page cover' : 'page';
+
+                    const img = document.createElement('img');
+                    img.src = canvas.toDataURL('image/jpeg', 0.9);
+                    img.alt = 'Page ' + i;
+                    wrapper.appendChild(img);
+
+                    flipbook.appendChild(wrapper);
+                }
+            })();
+        })();
+    </script>
 @endsection

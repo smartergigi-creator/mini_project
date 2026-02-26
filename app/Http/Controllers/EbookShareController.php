@@ -117,22 +117,10 @@ class EbookShareController extends Controller
 
         $ebook->increment('current_views');
 
-        $ebookController = new EbookController();
-        if (!$ebookController->ensurePagesExist($ebook)) {
+        if (!file_exists(public_path($ebook->pdf_path))) {
             return view('ebook.loading', compact('ebook'));
         }
 
-        $pagesPath = public_path("ebooks/{$ebook->folder_path}/pages");
-
-        $pages = collect(glob($pagesPath . '/*.jpg'))
-            ->sort()
-            ->map(fn($img) => asset("ebooks/{$ebook->folder_path}/pages/" . basename($img)))
-            ->toArray();
-
-        if (count($pages) === 0) {
-            return view('ebook.loading', compact('ebook'));
-        }
-
-        return view('ebook.flipbook', compact('ebook', 'pages'));
+        return view('ebook.flipbook', compact('ebook'));
     }
 }
