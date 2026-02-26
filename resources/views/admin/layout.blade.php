@@ -6,7 +6,7 @@
 </head>
 
 
-<body>
+<body class="admin-page">
 
     <div id="app">
 
@@ -23,12 +23,12 @@
                 @yield('content')
             </div>
 
-            {{-- Footer --}}
-            @include('admin.partials.footer')
-
         </div>
 
     </div>
+
+    {{-- Footer --}}
+    @include('admin.partials.footer')
 
 
     <script src="{{ asset('admin/dist/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>

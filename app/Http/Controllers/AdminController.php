@@ -160,6 +160,27 @@ public function categories()
     return view('admin.categories', compact('categories', 'parentCategories', 'allCategories'));
 }
 
+public function ebooks()
+{
+    $ebooks = Ebook::with(['uploader', 'uploadedByUser', 'category'])
+        ->latest()
+        ->paginate(10);
+
+    return view('admin.ebooks', compact('ebooks'));
+}
+
+public function todayUploads()
+{
+    $todayDate = Carbon::today();
+
+    $ebooks = Ebook::with(['uploader', 'uploadedByUser', 'category'])
+        ->whereDate('created_at', $todayDate)
+        ->latest()
+        ->paginate(10);
+
+    return view('admin.today-uploads', compact('ebooks', 'todayDate'));
+}
+
 public function storeCategoryTree(Request $request)
 {
     $validator = Validator::make($request->all(), [

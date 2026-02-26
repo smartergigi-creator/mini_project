@@ -29,6 +29,282 @@ body:not(.ebook-view) {
     background: #ffffff;
 }
 
+/* User layout: keep footer at bottom without extra white gap */
+body.dashboard-page,
+body.ebook-home {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+body.dashboard-page main,
+body.ebook-home main {
+    flex: 1 0 auto;
+}
+
+body.dashboard-page footer,
+body.ebook-home footer {
+    margin-top: auto;
+}
+
+body.admin-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+body.admin-page #app {
+    flex: 1 0 auto;
+}
+
+body.admin-page .site-footer {
+    position: relative;
+    z-index: 1040;
+}
+
+/* Admin layout: avoid extra page scroll caused by #main min-height:100vh */
+body.admin-page #main {
+    min-height: 0 !important;
+}
+
+/* Desktop admin: sidebar should be in normal flow (not fixed) */
+@media (min-width: 992px) {
+    body.admin-page #app {
+        display: grid;
+        grid-template-columns: 300px minmax(0, 1fr);
+        min-height: 100vh;
+    }
+
+    body.admin-page #sidebar {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        height: auto !important;
+        width: 300px;
+        overflow: visible !important;
+        max-width: 300px;
+    }
+
+    body.admin-page #sidebar .sidebar-wrapper {
+        position: relative !important;
+        top: auto !important;
+        bottom: auto !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: 100%;
+        overflow: visible !important;
+    }
+
+    body.admin-page #main {
+        margin-left: 0 !important;
+        width: auto !important;
+        min-width: 0;
+    }
+
+    body.sidebar-collapsed.admin-page #sidebar {
+        width: 80px;
+        max-width: 80px;
+    }
+
+    body.sidebar-collapsed.admin-page #app {
+        grid-template-columns: 80px minmax(0, 1fr);
+    }
+
+    body.sidebar-collapsed.admin-page #main {
+        margin-left: 0 !important;
+        width: auto !important;
+    }
+}
+
+/* Navbar should scroll with page (not sticky/fixed) */
+body.admin-page .custom-navbar,
+body.dashboard-page .custom-navbar,
+body.ebook-home .custom-navbar {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+}
+
+/* ===============================
+   COMMON SITE FOOTER
+================================ */
+.site-footer {
+    background: linear-gradient(180deg, #050a2f 0%, #060d39 100%);
+    color: #d7dcf3;
+    padding: 1.5rem 2rem 1.1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    width: 100%;
+}
+
+.site-footer-top {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 1.4rem;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.site-footer-logo {
+    color: #ffffff;
+    font-weight: 700;
+    margin-bottom: 0.55rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+
+.site-footer-logo-img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+.site-footer-brand p {
+    margin: 0;
+    font-size: 0.86rem;
+    color: #b8c1ea;
+    line-height: 1.6;
+}
+
+.site-footer-links h6 {
+    color: #ffd66f;
+    font-size: 0.74rem;
+    letter-spacing: 0.6px;
+    margin-bottom: 0.6rem;
+    text-transform: uppercase;
+}
+
+.site-footer-links a {
+    display: block;
+    color: #d3daf5;
+    text-decoration: none;
+    font-size: 0.85rem;
+    margin-bottom: 0.42rem;
+}
+
+.site-footer-links a:hover {
+    color: #14c7bb;
+}
+
+.site-footer-bottom {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-top: 1rem;
+}
+
+.news-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #ffd66f;
+    margin-bottom: 0.5rem;
+}
+
+.news-form {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+}
+
+.news-form input {
+    min-width: 220px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.08);
+    color: #f1f4ff;
+    padding: 0.45rem 0.65rem;
+    font-size: 0.84rem;
+}
+
+.news-form input::placeholder {
+    color: #c5ccef;
+}
+
+.news-form button {
+    border: 0;
+    border-radius: 4px;
+    background: #ffcb57;
+    color: #1f243b;
+    padding: 0.45rem 0.8rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.site-footer-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    font-size: 0.78rem;
+    color: #b3bce4;
+}
+
+.site-footer-social {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+
+.site-footer-social a {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #dce2ff;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    text-decoration: none;
+}
+
+.site-footer-social a:hover {
+    color: #14c7bb;
+    border-color: #14c7bb;
+}
+
+@media (max-width: 991.98px) {
+    .site-footer-top {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .site-footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .site-footer-meta {
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .site-footer {
+        padding: 1.2rem 1rem 0.9rem;
+    }
+
+    .site-footer-top {
+        grid-template-columns: 1fr;
+    }
+
+    .news-form {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .news-form input {
+        min-width: 0;
+        width: 100%;
+    }
+}
+
 /* Safety: never render flipbook UI outside ebook viewer page */
 body:not(.ebook-view) #viewer-wrapper,
 body:not(.ebook-view) .viewer-toolbar,

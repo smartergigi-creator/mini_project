@@ -31,30 +31,34 @@
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-3">
-                        <div class="card shadow-sm border-0 h-100 stat-card stat-ebooks">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div>
-                                        <div class="text-muted small">Total Ebooks</div>
-                                        <div class="fs-4 fw-bold">{{ $totalEbooks }}</div>
+                        <a href="{{ route('admin.ebooks') }}" target="_blank" rel="noopener" class="text-decoration-none">
+                            <div class="card shadow-sm border-0 h-100 stat-card stat-ebooks">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <div class="text-muted small">Total Ebooks</div>
+                                            <div class="fs-4 fw-bold">{{ $totalEbooks }}</div>
+                                        </div>
+                                        <i class="bi bi-book fs-2 text-success"></i>
                                     </div>
-                                    <i class="bi bi-book fs-2 text-success"></i>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="col-12 col-md-6 col-lg-3">
-                        <div class="card shadow-sm border-0 h-100 stat-card stat-uploads">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div>
-                                        <div class="text-muted small">Today Uploads</div>
-                                        <div class="fs-4 fw-bold">{{ $todayUploads }}</div>
+                        <a href="{{ route('admin.todayUploads') }}" target="_blank" rel="noopener" class="text-decoration-none">
+                            <div class="card shadow-sm border-0 h-100 stat-card stat-uploads">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <div class="text-muted small">Today Uploads</div>
+                                            <div class="fs-4 fw-bold">{{ $todayUploads }}</div>
+                                        </div>
+                                        <i class="bi bi-cloud-upload fs-2 text-info"></i>
                                     </div>
-                                    <i class="bi bi-cloud-upload fs-2 text-info"></i>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="col-12 col-md-6 col-lg-3">
                         <div class="card shadow-sm border-0 h-100 stat-card stat-expired">

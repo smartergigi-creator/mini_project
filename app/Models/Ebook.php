@@ -44,6 +44,11 @@ class Ebook extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function uploadedByUser()
+    {
+        return $this->belongsTo(User::class, 'uploaded_by');
+    }
+
     // Share pannina user
     public function sharedUser()
     {
