@@ -209,7 +209,8 @@ public function store(Request $request)
                 . '_' . time()
                 . '_' . Str::random(4);
 
-            $basePath = public_path("ebooks/$folder");
+            // $basePath = public_path("ebooks/$folder");
+            $basePath = $_SERVER['DOCUMENT_ROOT'] . "/ebooks/$folder";
 
             if (!File::exists($basePath)) {
                 File::makeDirectory($basePath, 0777, true);
