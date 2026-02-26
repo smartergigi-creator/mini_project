@@ -180,16 +180,16 @@
             <div class="row">
                 @forelse ($ebooks as $book)
                     @php
-                        $coverPath = optional($book->coverPage)->image_path;
-                        $coverUrl = $coverPath
-                            ? asset(ltrim(str_replace('\\', '/', $coverPath), '/'))
-                            : asset('images/homecover.png');
+                        $pdfUrl = asset(ltrim(str_replace('\\', '/', $book->pdf_path), '/'));
                     @endphp
                     <div class="col-lg-3 col-md-4 col-sm-6 mb-5 text-center">
 
                         <div class="book-wrapper">
                             <div class="book">
-                                <img src="{{ $coverUrl }}" alt="{{ $book->title }} cover">
+                                <img src="{{ asset('images/homecover.png') }}"
+                                    data-pdf-cover="1"
+                                    data-pdf-url="{{ $pdfUrl }}"
+                                    alt="{{ $book->title }} cover">
                             </div>
 
                             <div class="book-actions" aria-label="Book actions">
@@ -246,7 +246,57 @@
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!window.pdfjsLib) return;
+
+            const coverImages = Array.from(document.querySelectorAll('img[data-pdf-cover="1"][data-pdf-url]'));
+            if (!coverImages.length) return;
+
+            pdfjsLib.GlobalWorkerOptions.workerSrc =
+                'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+
+            const renderCover = async (imgEl) => {
+                const pdfUrl = imgEl.getAttribute('data-pdf-url');
+                if (!pdfUrl) return;
+
+                try {
+                    const pdf = await pdfjsLib.getDocument(pdfUrl).promise;
+                    const page = await pdf.getPage(1);
+                    const viewport = page.getViewport({ scale: 0.8 });
+
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    canvas.width = Math.floor(viewport.width);
+                    canvas.height = Math.floor(viewport.height);
+
+                    await page.render({
+                        canvasContext: ctx,
+                        viewport
+                    }).promise;
+
+                    imgEl.src = canvas.toDataURL('image/jpeg', 0.9);
+                } catch (e) {
+                    // Keep default placeholder image if PDF render fails.
+                }
+            };
+
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries, obs) => {
+                    entries.forEach((entry) => {
+                        if (!entry.isIntersecting) return;
+                        renderCover(entry.target);
+                        obs.unobserve(entry.target);
+                    });
+                }, { rootMargin: '120px 0px' });
+
+                coverImages.forEach((imgEl) => observer.observe(imgEl));
+            } else {
+                coverImages.forEach((imgEl) => renderCover(imgEl));
+            }
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
             const canShareNow = @json((bool) $canShareNow);
             if (!canShareNow) {
