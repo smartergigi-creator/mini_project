@@ -306,6 +306,8 @@
             const uploadForm = document.getElementById('uploadForm');
             const openModalBtn = document.getElementById('openUploadMetaModal');
             const uploadModalEl = document.getElementById('uploadMetaModal');
+            const pdfInput = document.getElementById('pdfInput');
+            const folderInput = document.getElementById('folderInput');
 
             const categorySelect = document.getElementById('uploadCategorySelect');
             const subCategorySelect = document.getElementById('uploadSubCategorySelect');
@@ -404,6 +406,58 @@
                     toggleField(relatedSubCategoryField, hasItems);
                     relatedSubCategorySelect.required = hasItems;
                 });
+            });
+
+            uploadForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                const formData = new FormData(uploadForm);
+                const selectedFiles = [];
+
+                if (pdfInput && pdfInput.files?.length) {
+                    selectedFiles.push(...Array.from(pdfInput.files));
+                }
+                if (folderInput && folderInput.files?.length) {
+                    selectedFiles.push(...Array.from(folderInput.files));
+                }
+
+                if (!selectedFiles.length) {
+                    alert('Please select at least one PDF file.');
+                    return;
+                }
+
+                formData.delete('pdfs[]');
+                selectedFiles.forEach((file) => {
+                    formData.append('pdfs[]', file);
+                });
+
+                const uploadStatus = document.getElementById('uploadStatus');
+                if (uploadStatus) uploadStatus.style.display = 'flex';
+
+                try {
+                    const res = await fetch('/ebooks/upload', {
+                        method: 'POST',
+                        credentials: 'same-origin',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name=\"csrf-token\"]')?.getAttribute('content') || '',
+                            Accept: 'application/json',
+                        },
+                        body: formData,
+                    });
+
+                    const data = await res.json().catch(() => ({}));
+
+                    if (!res.ok || !data.status) {
+                        throw new Error(data.message || 'Upload failed');
+                    }
+
+                    alert(data.message || 'Upload successful');
+                    window.location.reload();
+                } catch (err) {
+                    alert(err.message || 'Upload failed');
+                } finally {
+                    if (uploadStatus) uploadStatus.style.display = 'none';
+                }
             });
         });
 

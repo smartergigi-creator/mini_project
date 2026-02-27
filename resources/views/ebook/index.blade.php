@@ -131,6 +131,16 @@
 
                                 </div>
 
+                                <div id="fileList" class="border rounded p-3 mb-3" style="display:none;">
+                                    <strong>Selected Files (<span id="fileCount">0</span>)</strong>
+                                    <ul id="fileItems" class="mb-0 mt-2"></ul>
+                                </div>
+
+                                <div id="uploadStatus" class="upload-status mt-3 mb-3" style="display:none;">
+                                    <span class="spinner"></span>
+                                    <span class="text">Uploading ebook... Please wait</span>
+                                </div>
+
                                 <div class="text-end">
                                     <button type="submit" class="btn btn-primary px-4">
                                         Upload & Save

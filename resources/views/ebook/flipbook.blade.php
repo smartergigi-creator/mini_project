@@ -5,9 +5,15 @@
 
 @section('content')
     <div class="container-fluid vh-100 d-flex flex-column">
+        <div id="ebookLoader">
+            <div class="text-center">
+                <div class="spinner mb-3"></div>
+                <div id="ebookLoadingText" class="fw-semibold">Flipbook loading... 0%</div>
+            </div>
+        </div>
 
-        <div class="row">
-            <div class="col-12 text-start py-2">
+        <div class="row ebook-header-row">
+            <div class="col-12 text-start py-2 ebook-header-col">
                 <a href="{{ url('/home#ebooksSection') }}" class="btn btn-outline-dark btn-sm rounded-pill px-3">
                     <i class="bi bi-arrow-left"></i>Back
                 </a>
@@ -18,7 +24,7 @@
         </div>
 
         <div class="row flex-grow-1">
-            <div class="col-12 d-flex justify-content-center align-items-start">
+            <div class="col-12 d-flex justify-content-center align-items-center">
                 <div id="viewer-wrapper" class="mb-3">
 
                     <div class="viewer-toolbar position-absolute top-0 end-0 m-3 d-flex gap-2">
@@ -70,45 +76,100 @@
         (function() {
             const flipbook = document.getElementById('flipbook');
             const pdfUrl = @json(asset($ebook->pdf_path));
+            const loadingText = document.getElementById('ebookLoadingText');
 
             if (!flipbook || !window.pdfjsLib || !pdfUrl) {
                 return;
             }
 
-            // Let existing flipbook script wait for this promise before init.
-            window.__PDF_PAGES_READY_PROMISE__ = (async () => {
+            // Start viewer after initial pages; remaining pages render in background.
+            window.__PDF_PAGES_READY_PROMISE__ = new Promise(async (resolve, reject) => {
+                const PLACEHOLDER_IMG =
+                    'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
+
                 pdfjsLib.GlobalWorkerOptions.workerSrc =
                     'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
 
-                const pdf = await pdfjsLib.getDocument(pdfUrl).promise;
+                try {
+                    const pdf = await pdfjsLib.getDocument(pdfUrl).promise;
+                    const isMobile = window.innerWidth <= 900;
+                    const renderScale = isMobile ? 1.1 : 1.3;
+                    const jpegQuality = isMobile ? 0.75 : 0.8;
+                    const initialReadyPages = Math.min(pdf.numPages, isMobile ? 1 : 2);
+                    const pageImages = [];
 
-                for (let i = 1; i <= pdf.numPages; i++) {
-                    const page = await pdf.getPage(i);
-                    const viewport = page.getViewport({
-                        scale: 1.5
-                    });
+                    for (let i = 1; i <= pdf.numPages; i++) {
+                        const wrapper = document.createElement('div');
+                        wrapper.className = i === 1 ? 'page cover' : 'page';
+                        wrapper.dataset.pageNo = String(i);
+                        wrapper.dataset.loaded = '0';
 
-                    const canvas = document.createElement('canvas');
-                    const ctx = canvas.getContext('2d');
-                    canvas.width = Math.floor(viewport.width);
-                    canvas.height = Math.floor(viewport.height);
+                        const img = document.createElement('img');
+                        img.src = PLACEHOLDER_IMG;
+                        img.alt = 'Page ' + i;
+                        img.draggable = false;
+                        img.addEventListener('dragstart', (e) => e.preventDefault());
 
-                    await page.render({
-                        canvasContext: ctx,
-                        viewport
-                    }).promise;
+                        wrapper.appendChild(img);
+                        flipbook.appendChild(wrapper);
+                        pageImages.push(img);
+                    }
 
-                    const wrapper = document.createElement('div');
-                    wrapper.className = i === 1 ? 'page cover' : 'page';
+                    const renderPageIntoImage = async (i) => {
+                        const page = await pdf.getPage(i);
+                        const viewport = page.getViewport({
+                            scale: renderScale
+                        });
 
-                    const img = document.createElement('img');
-                    img.src = canvas.toDataURL('image/jpeg', 0.9);
-                    img.alt = 'Page ' + i;
-                    wrapper.appendChild(img);
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        canvas.width = Math.floor(viewport.width);
+                        canvas.height = Math.floor(viewport.height);
 
-                    flipbook.appendChild(wrapper);
+                        await page.render({
+                            canvasContext: ctx,
+                            viewport
+                        }).promise;
+
+                        const img = pageImages[i - 1];
+                        const wrapper = img?.closest('.page');
+                        if (img) {
+                            img.src = canvas.toDataURL('image/jpeg', jpegQuality);
+                        }
+                        if (wrapper) {
+                            wrapper.dataset.loaded = '1';
+                        }
+
+                        if (typeof window.__PDF_PAGE_RENDERED_HOOK__ === 'function') {
+                            window.__PDF_PAGE_RENDERED_HOOK__(i);
+                        }
+
+                        if (loadingText) {
+                            const percent = Math.round((i / pdf.numPages) * 100);
+                            loadingText.textContent = `Flipbook loading... ${percent}%`;
+                        }
+                    };
+
+                    for (let i = 1; i <= initialReadyPages; i++) {
+                        await renderPageIntoImage(i);
+                    }
+
+                    resolve();
+
+                    // Background render for remaining pages.
+                    (async () => {
+                        for (let i = initialReadyPages + 1; i <= pdf.numPages; i++) {
+                            try {
+                                await renderPageIntoImage(i);
+                            } catch (_) {
+                                // Keep placeholder on failed page render.
+                            }
+                        }
+                    })();
+                } catch (error) {
+                    reject(error);
                 }
-            })();
+            });
         })();
     </script>
 @endsection

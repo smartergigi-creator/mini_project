@@ -24,6 +24,15 @@ body.ebook-view #viewer-wrapper {
     background: #e6e6e6;
 }
 
+body.ebook-view .ebook-header-row {
+    padding: 12px 20px 0;
+}
+
+body.ebook-view .ebook-header-col {
+    padding-left: 0;
+    padding-right: 0;
+}
+
 /* Other pages stay white */
 body:not(.ebook-view) {
     background: #ffffff;
@@ -269,6 +278,28 @@ body.ebook-home .custom-navbar {
     border-color: #14c7bb;
 }
 
+/* =========================================================
+   FINAL FLIPBOOK STABILITY (keep at end)
+========================================================= */
+body.ebook-view .stf__parent {
+    transform: none !important;
+    transition: none !important;
+}
+
+body.ebook-view .stf__page--left,
+body.ebook-view .stf__page--right {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+body.ebook-view .stf__shadow {
+    display: block !important;
+}
+
+body.ebook-view #flipbook {
+    transition: none !important;
+}
+
 @media (max-width: 991.98px) {
     .site-footer-top {
         grid-template-columns: 1fr 1fr;
@@ -285,6 +316,10 @@ body.ebook-home .custom-navbar {
 }
 
 @media (max-width: 575.98px) {
+    body.ebook-view .ebook-header-row {
+        padding: 10px 12px 0;
+    }
+
     .site-footer {
         padding: 1.2rem 1rem 0.9rem;
     }
@@ -508,15 +543,15 @@ body.ebook-view .container-fluid {
 ========================================================= */
 #viewer-wrapper {
     width: 100%;
-    min-height: calc(100vh - 96px);
+    min-height: 100%;
     display: none;
     /* shown by JS */
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
 
     background: transparent;
     /* 🔥 BODY GREY WILL SHOW */
-    padding: 8px 0 20px;
+    padding: 24px 0 20px;
 
     opacity: 0;
     transition: opacity 0.3s ease;
@@ -599,7 +634,8 @@ body.ebook-view .container-fluid {
 
     border-radius: 50%;
     /* ✅ PERFECT CIRCLE */
-    background: #3a3a3a;
+    background: #1abad4;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
     border: none;
     cursor: pointer;
 
@@ -620,7 +656,8 @@ body.ebook-view .container-fluid {
 }
 
 .side-btn:hover {
-    background: rgba(210, 205, 205, 0.85);
+    background: #149bb1;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.24);
 }
 
 /* ===============================
@@ -631,7 +668,8 @@ body.ebook-view .container-fluid {
     /* ✅ ICON SIZE */
     height: 22px;
     object-fit: contain;
-    opacity: 0.95;
+    opacity: 1;
+    filter: brightness(0) invert(1);
     pointer-events: none;
     /* ✅ avoid misclick */
 }
@@ -701,7 +739,7 @@ body.ebook-view .container-fluid {
    DEFAULT = CLOSED (page load)
    =============================== */
 .stf__parent {
-    transform: translateX(-25%);
+    transform: translateX(0);
     transition: transform 0.25s ease;
 }
 
@@ -746,30 +784,28 @@ body.book-open .stf__parent {
         background: #fff;
     }
 
-    /* Side arrows overlay like your image */
+    /* Mobile nav buttons */
     .side-btn {
-        background: rgba(0, 0, 0, 0.55);
-        width: 48px;
-        height: 48px;
-        top: 96%;
-    }
-}
-
-/* FORCE SINGLE PAGE ON MOBILE */
-@media (max-width: 900px) {
-
-    .stf__wrapper {
-        display: flex !important;
-        justify-content: center !important;
+        top: auto;
+        bottom: 24px;
+        transform: none;
+        width: 46px;
+        height: 46px;
+        background: #1abad4;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
     }
 
-    .stf__parent {
-        width: 100% !important;
-        max-width: 100% !important;
+    .side-btn.prev {
+        left: 10px;
     }
 
-    .stf__page {
-        width: 100% !important;
+    .side-btn.next {
+        right: 10px;
+    }
+
+    .side-btn img {
+        width: 20px;
+        height: 20px;
     }
 }
 
@@ -780,7 +816,18 @@ body.book-open .stf__parent {
 .fullscreen-active #viewer-wrapper {
     width: 100vw;
     height: 100vh;
-    padding: 0;
+    padding: 48px 0 20px;
+    box-sizing: border-box;
+}
+
+#viewer-wrapper:fullscreen {
+    width: 100vw;
+    height: 100vh;
+    padding: 48px 0 20px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .fullscreen-active #flipbook {
@@ -897,6 +944,12 @@ body.ebook-view .page canvas {
     width: 100% !important;
     height: 100% !important;
     object-fit: contain !important;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body.ebook-view .page {
@@ -968,7 +1021,7 @@ body.ebook-view .page {
 
 /* Pixel nudge */
 .stf__parent {
-    transform: translateX(-0.5px) !important;
+    transform: none !important;
 }
 
 .blank-page {
@@ -990,6 +1043,24 @@ body.ebook-view .page {
 #flipbook {
     transition: transform 0.25s ease;
     will-change: transform;
+}
+
+/* =========================================================
+   PAGEFLIP STABILITY OVERRIDES
+   (Fix front-cover open/close glitches)
+========================================================= */
+.stf__page--left,
+.stf__page--right {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+.stf__shadow {
+    display: block !important;
+}
+
+.stf__parent {
+    transform: none !important;
 }
 
 /* =========================

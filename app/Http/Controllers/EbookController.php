@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use App\Models\Ebook;
 
 use App\Models\Category;  
@@ -209,9 +211,7 @@ public function store(Request $request)
                 . '_' . time()
                 . '_' . Str::random(4);
 
-            // $basePath = public_path("ebooks/$folder");
-            // $basePath = $_SERVER['DOCUMENT_ROOT'] . "/ebooks/$folder";
-            $basePath = base_path('../public_html/ebooks/' . $folder);
+            $basePath = public_path("ebooks/$folder");
             
 
             if (!File::exists($basePath)) {
@@ -420,9 +420,28 @@ public function delete($id)
 
         $ebook = Ebook::findOrFail($id);
 
-        $folderPath = public_path("ebooks/{$ebook->folder_path}");
+        // Clean dependent rows explicitly (safe even if FK cascade exists).
+        if (Schema::hasTable('ebook_pages')) {
+            DB::table('ebook_pages')
+                ->where('ebook_id', $ebook->id)
+                ->delete();
+        }
 
-        if (File::exists($folderPath)) {
+        if (Schema::hasTable('ebook_shares')) {
+            DB::table('ebook_shares')
+                ->where('ebook_id', $ebook->id)
+                ->delete();
+        }
+
+        $folderPaths = array_unique([
+            public_path("ebooks/{$ebook->folder_path}"),
+            base_path("../public_html/ebooks/{$ebook->folder_path}"),
+        ]);
+
+        foreach ($folderPaths as $folderPath) {
+            if (!File::exists($folderPath)) {
+                continue;
+            }
 
             if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
                 exec('rd /s /q "' . $folderPath . '"');
@@ -431,8 +450,9 @@ public function delete($id)
             }
         }
 
-        // Delete DB record
-        $ebook->delete();
+        if (Schema::hasTable('ebook') && Schema::hasColumn('ebook', 'id')) {
+            $ebook->delete();
+        }
 
         return response()->json([
             'status' => true,

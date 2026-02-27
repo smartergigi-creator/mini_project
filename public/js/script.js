@@ -41,6 +41,9 @@ window.addEventListener("pageshow", (event) => {
 
     let pageFlip = null;
     const PAGE_OFFSET = 1; // for fake first page
+    let firstRealPageIndex = 1;
+    let lastRealPageIndex = 1;
+    let lastNavigablePageIndex = 1;
 
     let isReady = false;
     let isInitRunning = false;
@@ -141,6 +144,7 @@ window.addEventListener("pageshow", (event) => {
                 .then(initWhenReady)
                 .catch(() => {
                     isInitRunning = false;
+                    hideLoader();
                 });
             return;
         }
@@ -223,6 +227,32 @@ window.addEventListener("pageshow", (event) => {
     /* ===============================openShareModal
    FLIPBOOK
 =============================== */
+    function refreshRealPageBounds(book) {
+        const allPages = Array.from(book.querySelectorAll(".page"));
+        const firstReal = allPages.findIndex((p) => !p.classList.contains("fake"));
+        const lastReal = allPages.length - 1 - [...allPages].reverse()
+            .findIndex((p) => !p.classList.contains("fake"));
+
+        firstRealPageIndex = firstReal >= 0 ? firstReal : 0;
+        lastRealPageIndex = lastReal >= firstRealPageIndex ? lastReal : firstRealPageIndex;
+        lastNavigablePageIndex = lastRealPageIndex;
+    }
+
+    function refreshLoadedPageBounds(book) {
+        const allPages = Array.from(book.querySelectorAll(".page"));
+        const loadedRealIndexes = allPages
+            .map((page, index) => ({ page, index }))
+            .filter(({ page }) => !page.classList.contains("fake") && page.dataset.loaded === "1")
+            .map(({ index }) => index);
+
+        if (!loadedRealIndexes.length) {
+            lastNavigablePageIndex = firstRealPageIndex;
+            return;
+        }
+
+        const lastLoaded = loadedRealIndexes[loadedRealIndexes.length - 1];
+        lastNavigablePageIndex = Math.min(lastRealPageIndex, lastLoaded);
+    }
 
     function initFlipbook() {
         if (pageFlip) return;
@@ -230,11 +260,15 @@ window.addEventListener("pageshow", (event) => {
         const book = document.getElementById("flipbook");
         if (!book) return;
 
+        const mobile = window.innerWidth <= 900;
+        const landscape = window.innerWidth > window.innerHeight;
+        const useSingleMode = mobile && !landscape;
+
         /* Fake pages */
 
         let pages = book.querySelectorAll(".page");
 
-        if (!pages[0]?.classList.contains("fake")) {
+        if (!useSingleMode && !pages[0]?.classList.contains("fake")) {
             const fake = document.createElement("div");
             fake.className = "page fake";
 
@@ -243,17 +277,17 @@ window.addEventListener("pageshow", (event) => {
 
         pages = book.querySelectorAll(".page");
 
-        if (pages.length % 2 !== 0) {
+        if (!useSingleMode && pages.length % 2 !== 0) {
             const fake = document.createElement("div");
             fake.className = "page fake";
 
             book.appendChild(fake);
         }
 
-        const { width, height } = calculateSize();
+        refreshRealPageBounds(book);
+        refreshLoadedPageBounds(book);
 
-        const mobile = window.innerWidth <= 900;
-        const landscape = window.innerWidth > window.innerHeight;
+        const { width, height } = calculateSize();
 
         pageFlip = new St.PageFlip(book, {
             width,
@@ -263,7 +297,7 @@ window.addEventListener("pageshow", (event) => {
 
             showCover: false,
 
-            usePortrait: mobile && !landscape,
+            usePortrait: useSingleMode,
 
             autoSize: false,
             maxShadowOpacity: 0.3,
@@ -276,17 +310,34 @@ window.addEventListener("pageshow", (event) => {
         pageFlip.loadFromHTML(book.querySelectorAll(".page"));
 
         setTimeout(() => {
-            pageFlip.turnToPage(1);
+            pageFlip.turnToPage(firstRealPageIndex);
             updateNav();
         }, 150);
 
         /* SOUND ONLY HERE */
         pageFlip.on("flip", () => {
+            const current = pageFlip.getCurrentPageIndex();
+            const clamped = Math.min(
+                Math.max(current, firstRealPageIndex),
+                lastNavigablePageIndex,
+            );
+
+            if (current !== clamped) {
+                pageFlip.turnToPage(clamped);
+            }
+
             updateNav();
             playSound();
         });
 
         setupNav();
+        window.__PDF_PAGE_RENDERED_HOOK__ = () => {
+            const liveBook = document.getElementById("flipbook");
+            if (!liveBook || !pageFlip) return;
+
+            refreshLoadedPageBounds(liveBook);
+            updateNav();
+        };
 
         window.addEventListener("resize", debounce(resizeBook, 300));
     }
@@ -298,7 +349,14 @@ window.addEventListener("pageshow", (event) => {
     function resizeBook() {
         if (!pageFlip) return;
 
+        const currentPage = pageFlip.getCurrentPageIndex();
+        const clampedPage = Math.min(
+            Math.max(currentPage, firstRealPageIndex),
+            lastNavigablePageIndex,
+        );
         pageFlip.update(calculateSize());
+        pageFlip.turnToPage(clampedPage);
+        applyZoom(zoomLevel);
     }
 
     function debounce(fn, d) {
@@ -322,6 +380,18 @@ window.addEventListener("pageshow", (event) => {
         if (prev) {
             prev.onclick = (e) => {
                 e.preventDefault();
+                if (!pageFlip) return;
+
+                const current = pageFlip.getCurrentPageIndex();
+                if (current <= firstRealPageIndex) return;
+
+                const target = current - 1;
+                if (target <= firstRealPageIndex) {
+                    pageFlip.turnToPage(firstRealPageIndex);
+                    updateNav();
+                    return;
+                }
+
                 pageFlip.flipPrev();
             };
         }
@@ -329,6 +399,18 @@ window.addEventListener("pageshow", (event) => {
         if (next) {
             next.onclick = (e) => {
                 e.preventDefault();
+                if (!pageFlip) return;
+
+                const current = pageFlip.getCurrentPageIndex();
+                if (current >= lastNavigablePageIndex) return;
+
+                const target = current + 1;
+                if (target >= lastNavigablePageIndex) {
+                    pageFlip.turnToPage(lastNavigablePageIndex);
+                    updateNav();
+                    return;
+                }
+
                 pageFlip.flipNext();
             };
         }
@@ -338,12 +420,12 @@ window.addEventListener("pageshow", (event) => {
         if (!pageFlip) return;
 
         const i = pageFlip.getCurrentPageIndex();
-        const t = pageFlip.getPageCount() - 1;
+        const t = lastNavigablePageIndex;
 
         const prev = document.getElementById("prevPage");
         const next = document.getElementById("nextPage");
 
-        if (prev) prev.style.display = i <= 1 ? "none" : "flex";
+        if (prev) prev.style.display = i <= firstRealPageIndex ? "none" : "flex";
         if (next) next.style.display = i >= t ? "none" : "flex";
     }
 
@@ -388,6 +470,18 @@ window.addEventListener("pageshow", (event) => {
                 ? document.exitFullscreen()
                 : wrap.requestFullscreen();
         };
+
+        const syncAfterFullscreen = () => {
+            const isViewerFullscreen = document.fullscreenElement === wrap;
+            document.body.classList.toggle("fullscreen-active", isViewerFullscreen);
+
+            // Browser applies fullscreen layout async, so wait one frame.
+            setTimeout(() => {
+                resizeBook();
+            }, 80);
+        };
+
+        document.addEventListener("fullscreenchange", syncAfterFullscreen);
     }
     /* ===============================
    TABLE OF CONTENTS
@@ -462,6 +556,7 @@ window.addEventListener("pageshow", (event) => {
         if (!pdf && !folder) return;
 
         function update(files) {
+            if (!list || !items || !count) return;
             items.innerHTML = "";
 
             let c = 0;
@@ -816,17 +911,41 @@ window.addEventListener("resize", () => {
 document.addEventListener("DOMContentLoaded", function () {
     const uploadForm = document.getElementById("uploadForm");
     const uploadStatus = document.getElementById("uploadStatus");
+    const pdfInput = document.getElementById("pdfInput");
+    const folderInput = document.getElementById("folderInput");
+
+    // Home page has its own dedicated upload handler in blade script.
+    if (document.body.classList.contains("ebook-home")) return;
 
     if (!uploadForm) return;
 
     uploadForm.addEventListener("submit", function (e) {
         e.preventDefault();
 
-        const formData = new FormData(this);
+        const formData = new FormData(uploadForm);
+        const selectedFiles = [];
+
+        if (pdfInput && pdfInput.files?.length) {
+            selectedFiles.push(...Array.from(pdfInput.files));
+        }
+        if (folderInput && folderInput.files?.length) {
+            selectedFiles.push(...Array.from(folderInput.files));
+        }
+
+        const pdfFiles = selectedFiles.filter((file) => file.type === "application/pdf");
+        if (!pdfFiles.length) {
+            showMessage("error", "Please select at least one PDF file.");
+            return;
+        }
+
+        formData.delete("pdfs[]");
+        pdfFiles.forEach((file) => {
+            formData.append("pdfs[]", file);
+        });
 
         const token = document
             .querySelector('meta[name="csrf-token"]')
-            .getAttribute("content");
+            ?.getAttribute("content");
 
         // ✅ SHOW LOADING
         if (uploadStatus) {
@@ -841,7 +960,7 @@ document.addEventListener("DOMContentLoaded", function () {
             method: "POST",
             credentials: "same-origin",
             headers: {
-                "X-CSRF-TOKEN": token,
+                "X-CSRF-TOKEN": token || "",
                 Accept: "application/json",
             },
             body: formData,
